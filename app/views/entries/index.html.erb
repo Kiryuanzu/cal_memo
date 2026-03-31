@@ -1,0 +1,57 @@
+<% content_for :title, "摂取カロリーメモ" %>
+
+<main class="shell">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">CALORIE LOG</p>
+      <h1>摂取カロリーを、ただ記録する。</h1>
+      <p class="hero-copy">
+        <%= @today.strftime("%Y/%m/%d") %> の合計は
+        <strong><%= number_with_delimiter(@today_total_calories) %> kcal</strong>
+        です。
+      </p>
+    </div>
+
+    <%= link_to "記録を追加", new_entry_path, class: "button button-primary" %>
+  </section>
+
+  <section class="panel">
+    <div class="panel-header">
+      <div>
+        <h2>記録一覧</h2>
+        <p>日時の新しい順に表示しています。</p>
+      </div>
+      <p class="panel-total"><%= @entries.count %>件</p>
+    </div>
+
+    <% if @entries.any? %>
+      <div class="entry-list">
+        <% @entries.each do |entry| %>
+          <article class="entry-card">
+            <div class="entry-main">
+              <p class="entry-time"><%= entry.eaten_at.strftime("%m/%d %H:%M") %></p>
+              <div>
+                <h3><%= entry.name %></h3>
+                <% if entry.note.present? %>
+                  <p class="entry-note"><%= entry.note %></p>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="entry-side">
+              <p class="entry-calories"><%= number_with_delimiter(entry.calories) %> kcal</p>
+              <div class="entry-actions">
+                <%= link_to "編集", edit_entry_path(entry), class: "button button-subtle" %>
+                <%= button_to "削除", entry_path(entry), method: :delete, class: "button button-danger", form: { data: { turbo_confirm: "この記録を削除しますか？" } } %>
+              </div>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <p>まだ記録がありません。最初の1件を追加してください。</p>
+      </div>
+    <% end %>
+  </section>
+</main>

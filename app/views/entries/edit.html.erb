@@ -1,0 +1,15 @@
+<% content_for :title, "記録を編集" %>
+
+<main class="shell">
+  <section class="form-panel">
+    <div class="panel-header">
+      <div>
+        <p class="eyebrow">EDIT ENTRY</p>
+        <h1>記録を編集</h1>
+        <p>必要な項目だけ直して保存します。</p>
+      </div>
+    </div>
+
+    <%= render "form", entry: @entry %>
+  </section>
+</main>

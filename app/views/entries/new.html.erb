@@ -1,0 +1,15 @@
+<% content_for :title, "記録を追加" %>
+
+<main class="shell">
+  <section class="form-panel">
+    <div class="panel-header">
+      <div>
+        <p class="eyebrow">NEW ENTRY</p>
+        <h1>記録を追加</h1>
+        <p>食品名、カロリー、日時だけ入れれば使えます。</p>
+      </div>
+    </div>
+
+    <%= render "form", entry: @entry %>
+  </section>
+</main>

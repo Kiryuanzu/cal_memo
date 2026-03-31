@@ -1,0 +1,38 @@
+<%= form_with(model: entry) do |form| %>
+  <% if entry.errors.any? %>
+    <div class="form-errors">
+      <h2>入力内容を確認してください。</h2>
+
+      <ul>
+        <% entry.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, "食品名" %>
+    <%= form.text_field :name, placeholder: "バナナ", autofocus: true, class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :calories, "カロリー" %>
+    <%= form.number_field :calories, min: 1, step: 1, placeholder: "86", class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :eaten_at, "日時" %>
+    <%= form.datetime_field :eaten_at, value: (entry.eaten_at || Time.zone.now).strftime("%Y-%m-%dT%H:%M"), class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :note, "メモ" %>
+    <%= form.textarea :note, rows: 4, placeholder: "任意", class: "input input-textarea" %>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to "キャンセル", entries_path, class: "button button-subtle" %>
+    <%= form.submit entry.persisted? ? "更新する" : "登録する", class: "button button-primary" %>
+  </div>
+<% end %>
