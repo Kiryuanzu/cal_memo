@@ -56,12 +56,42 @@ textarea {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   gap: 24px;
-  align-items: end;
+  align-items: center;
   padding: 32px;
   margin-bottom: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 208, 208, 0.38), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(255, 227, 182, 0.42), transparent 30%),
+    linear-gradient(135deg, rgba(255, 252, 247, 0.96) 0%, rgba(255, 241, 234, 0.94) 100%);
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.hero::before {
+  top: -38px;
+  right: 72px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 214, 214, 0.35);
+}
+
+.hero::after {
+  bottom: -46px;
+  left: -12px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 232, 193, 0.45);
 }
 
 .hero h1,
@@ -75,7 +105,17 @@ textarea {
 
 .hero h1 {
   font-size: clamp(2.3rem, 5vw, 4rem);
-  max-width: 9ch;
+  max-width: 10ch;
+}
+
+.hero-content,
+.hero-summary {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 34rem;
 }
 
 .hero-copy,
@@ -93,6 +133,49 @@ textarea {
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.16em;
+}
+
+.hero-chip {
+  display: inline-flex;
+  margin: 0 0 14px;
+  padding: 8px 14px;
+  border: 1px solid rgba(159, 67, 20, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 250, 246, 0.9);
+  color: var(--primary-deep);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.hero-summary {
+  display: grid;
+  gap: 14px;
+  justify-items: end;
+}
+
+.hero-total-card {
+  min-width: 220px;
+  padding: 18px 20px;
+  border: 1px solid rgba(159, 67, 20, 0.12);
+  border-radius: 22px;
+  background: rgba(255, 253, 249, 0.88);
+  text-align: right;
+}
+
+.hero-total-label,
+.hero-total-value {
+  margin: 0;
+}
+
+.hero-total-label {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.hero-total-value {
+  margin-top: 6px;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: var(--primary-deep);
 }
 
 .panel,
@@ -284,7 +367,13 @@ textarea {
     display: grid;
   }
 
+  .hero-summary,
   .entry-side {
     justify-items: start;
+  }
+
+  .hero-total-card {
+    width: 100%;
+    text-align: left;
   }
 }

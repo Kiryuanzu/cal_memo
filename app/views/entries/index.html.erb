@@ -1,18 +1,22 @@
-<% content_for :title, "摂取カロリーメモ" %>
+<% content_for :title, "カロリー計算メモ帳" %>
 
 <main class="shell">
   <section class="hero">
-    <div>
-      <p class="eyebrow">CALORIE LOG</p>
-      <h1>摂取カロリーを、ただ記録する。</h1>
-      <p class="hero-copy">
-        <%= @today.strftime("%Y/%m/%d") %> の合計は
-        <strong><%= number_with_delimiter(@today_total_calories) %> kcal</strong>
-        です。
-      </p>
+    <div class="hero-content">
+      <p class="hero-chip">きょうのごはんメモ</p>
+      <p class="eyebrow">CALORIE MEMO BOOK</p>
+      <h1>カロリー計算メモ帳</h1>
+      <p class="hero-copy">食べたものを、あとから見返しやすく。毎日の記録をふんわり残せます。</p>
     </div>
 
-    <%= link_to "記録を追加", new_entry_path, class: "button button-primary" %>
+    <div class="hero-summary">
+      <div class="hero-total-card">
+        <p class="hero-total-label"><%= @today.strftime("%Y/%m/%d") %> の合計</p>
+        <p class="hero-total-value"><strong><%= number_with_delimiter(@today_total_calories) %> kcal</strong></p>
+      </div>
+
+      <%= link_to "記録を追加", new_entry_path, class: "button button-primary" %>
+    </div>
   </section>
 
   <section class="panel">
