@@ -24,12 +24,9 @@
   </head>
 
   <body>
-    <% if notice.present? %>
-      <p class="flash flash-notice"><%= notice %></p>
-    <% end %>
-    <% if alert.present? %>
-      <p class="flash flash-alert"><%= alert %></p>
-    <% end %>
+    <div id="flash">
+      <%= render "shared/flash" %>
+    </div>
 
     <%= yield %>
   </body>

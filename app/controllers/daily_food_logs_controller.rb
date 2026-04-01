@@ -16,18 +16,43 @@ class DailyFoodLogsController < ApplicationController
     )
 
     if @daily_food_log.save
-      redirect_to root_path(date: @selected_date.iso8601, tab: @selected_tab), notice: "#{food.name}を登録しました。"
+      load_dashboard
+
+      respond_to do |format|
+        format.turbo_stream do
+          flash.now[:notice] = "#{food.name}を登録しました。"
+          render_dashboard_updates
+        end
+        format.html { redirect_to root_path(date: @selected_date.iso8601, tab: @selected_tab), notice: "#{food.name}を登録しました。" }
+      end
     else
       load_dashboard
-      flash.now[:alert] = @daily_food_log.errors.full_messages.to_sentence
-      render :index, status: :unprocessable_entity
+
+      respond_to do |format|
+        format.turbo_stream do
+          flash.now[:alert] = @daily_food_log.errors.full_messages.to_sentence
+          render_dashboard_updates(status: :unprocessable_entity)
+        end
+        format.html do
+          flash.now[:alert] = @daily_food_log.errors.full_messages.to_sentence
+          render :index, status: :unprocessable_entity
+        end
+      end
     end
   end
 
   def destroy
     eaten_on = @daily_food_log.eaten_on
     @daily_food_log.destroy!
-    redirect_to root_path(date: eaten_on.iso8601, tab: @selected_tab), notice: "記録を削除しました。", status: :see_other
+    load_dashboard
+
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:notice] = "記録を削除しました。"
+        render_dashboard_updates
+      end
+      format.html { redirect_to root_path(date: eaten_on.iso8601, tab: @selected_tab), notice: "記録を削除しました。", status: :see_other }
+    end
   end
 
   private
@@ -146,5 +171,12 @@ class DailyFoodLogsController < ApplicationController
 
     def japanese_wday(date)
       %w[日 月 火 水 木 金 土][date.wday]
+    end
+
+    def render_dashboard_updates(status: :ok)
+      render turbo_stream: [
+        turbo_stream.replace("flash", partial: "shared/flash"),
+        turbo_stream.replace("dashboard", partial: "daily_food_logs/dashboard")
+      ], status: status
     end
 end
