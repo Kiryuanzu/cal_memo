@@ -24,7 +24,13 @@
     </div>
   </section>
 
-  <section class="panel">
+  <nav class="section-tabs" aria-label="画面内移動" data-controller="section-nav">
+    <button type="button" class="section-tab-link" data-action="section-nav#scroll" data-section-nav-section-id-param="summary-section">集計</button>
+    <button type="button" class="section-tab-link" data-action="section-nav#scroll" data-section-nav-section-id-param="input-section">入力</button>
+    <button type="button" class="section-tab-link" data-action="section-nav#scroll" data-section-nav-section-id-param="share-section">AI共有</button>
+  </nav>
+
+  <section id="summary-section" class="panel section-anchor-target">
     <div class="panel-header">
       <div>
         <h2>集計</h2>
@@ -66,9 +72,9 @@
     </div>
   </section>
 
-  <section class="meal-layout">
+  <section id="input-section" class="meal-layout section-anchor-target">
     <% @meal_sections.each do |section| %>
-      <section class="panel meal-panel">
+      <section id="meal-<%= section[:key] %>-section" class="panel meal-panel section-anchor-target">
         <div class="panel-header">
           <div>
             <p class="meal-heading <%= meal_type_badge(section[:key]) %>"><%= section[:label] %></p>
@@ -110,7 +116,7 @@
     <% end %>
   </section>
 
-  <section class="panel copy-panel" data-controller="copy">
+  <section id="share-section" class="panel copy-panel section-anchor-target" data-controller="copy">
     <div class="panel-header">
       <div>
         <h2>AI共有用テキスト</h2>
