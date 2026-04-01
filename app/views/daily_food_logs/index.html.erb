@@ -1,5 +1,5 @@
 <% content_for :title, "カロリー計算メモ帳" %>
 
-<div id="dashboard">
+<%= turbo_frame_tag "dashboard" do %>
   <%= render "dashboard" %>
-</div>
+<% end %>

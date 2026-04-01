@@ -176,7 +176,7 @@ class DailyFoodLogsController < ApplicationController
     def render_dashboard_updates(status: :ok)
       render turbo_stream: [
         turbo_stream.replace("flash", partial: "shared/flash"),
-        turbo_stream.replace("dashboard", partial: "daily_food_logs/dashboard")
+        turbo_stream.update("dashboard", partial: "daily_food_logs/dashboard")
       ], status: status
     end
 end
