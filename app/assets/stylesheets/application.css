@@ -359,6 +359,227 @@ textarea {
   border: 1px solid rgba(116, 144, 98, 0.25);
 }
 
+.flash-alert {
+  background: rgba(157, 47, 47, 0.12);
+  border: 1px solid rgba(157, 47, 47, 0.24);
+}
+
+.date-switcher,
+.summary-cards,
+.tabs,
+.food-palette,
+.meal-layout {
+  display: grid;
+}
+
+.date-switcher {
+  gap: 10px;
+}
+
+.summary-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.summary-card,
+.summary-row,
+.log-item {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface-strong);
+}
+
+.summary-card {
+  padding: 20px;
+}
+
+.summary-card p,
+.summary-card strong,
+.summary-row-label,
+.summary-row-subtitle,
+.summary-row-calories,
+.log-name,
+.log-meta,
+.log-calories,
+.meal-heading,
+.copy-status {
+  margin: 0;
+}
+
+.summary-card p {
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.summary-card strong {
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.tabs {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.tab {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.88);
+  font-weight: 700;
+}
+
+.tab.is-active {
+  color: #fff9f2;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
+  border-color: transparent;
+}
+
+.summary-list {
+  display: grid;
+  gap: 12px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  padding: 16px 18px;
+}
+
+.summary-row-subtitle,
+.log-meta,
+.copy-status {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.summary-row-calories,
+.log-calories {
+  font-weight: 800;
+}
+
+.meal-layout {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.meal-panel {
+  height: 100%;
+}
+
+.meal-heading {
+  display: inline-flex;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.meal-breakfast {
+  color: #8b5e1e;
+  background: rgba(255, 226, 163, 0.42);
+}
+
+.meal-lunch {
+  color: #855118;
+  background: rgba(255, 205, 155, 0.42);
+}
+
+.meal-dinner {
+  color: #7b4330;
+  background: rgba(255, 188, 188, 0.36);
+}
+
+.meal-snack {
+  color: #72538e;
+  background: rgba(231, 213, 255, 0.42);
+}
+
+.food-palette {
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.food-palette form {
+  margin: 0;
+}
+
+.food-button {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid rgba(159, 67, 20, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 249, 242, 0.92);
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.food-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(159, 67, 20, 0.3);
+  background: #fffdf8;
+}
+
+.log-list {
+  display: grid;
+  gap: 10px;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.log-name {
+  font-weight: 700;
+}
+
+.log-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.copy-panel {
+  margin-top: 24px;
+}
+
+.copy-text {
+  margin-bottom: 10px;
+}
+
+.is-normal {
+  border-color: rgba(68, 43, 27, 0.14);
+}
+
+.hero-total-card.is-warning,
+.summary-card.is-warning,
+.summary-row.is-warning {
+  border-color: rgba(214, 130, 26, 0.3);
+  background: rgba(255, 242, 214, 0.88);
+}
+
+.hero-total-card.is-alert,
+.summary-card.is-alert,
+.summary-row.is-alert {
+  border-color: rgba(157, 47, 47, 0.3);
+  background: rgba(255, 232, 232, 0.88);
+}
+
 @media (max-width: 720px) {
   .hero,
   .entry-card,
@@ -367,13 +588,23 @@ textarea {
     display: grid;
   }
 
+  .summary-cards,
+  .meal-layout,
+  .tabs,
   .hero-summary,
   .entry-side {
+    grid-template-columns: 1fr;
     justify-items: start;
   }
 
   .hero-total-card {
     width: 100%;
     text-align: left;
+  }
+
+  .summary-row,
+  .log-item,
+  .log-actions {
+    display: grid;
   }
 }

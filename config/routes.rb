@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root "entries#index"
+  root "daily_food_logs#index"
+  resources :daily_food_logs, only: [ :index, :create, :destroy ]
   resources :entries, except: :show
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

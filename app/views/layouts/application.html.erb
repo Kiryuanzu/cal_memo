@@ -27,6 +27,9 @@
     <% if notice.present? %>
       <p class="flash flash-notice"><%= notice %></p>
     <% end %>
+    <% if alert.present? %>
+      <p class="flash flash-alert"><%= alert %></p>
+    <% end %>
 
     <%= yield %>
   </body>

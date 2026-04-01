@@ -6,7 +6,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get root_url
+    get entries_url
     assert_response :success
     assert_match "86 kcal", @response.body
   end

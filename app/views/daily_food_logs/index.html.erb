@@ -1,0 +1,127 @@
+<% content_for :title, "カロリー計算メモ帳" %>
+
+<main class="shell">
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-chip">1日のカロリーをさっと集計</p>
+      <p class="eyebrow">CALORIE MEMO BOOK</p>
+      <h1>カロリー計算メモ帳</h1>
+      <p class="hero-copy">
+        <strong><%= @selected_date.year %>年<%= @selected_date.month %>月<%= @selected_date.day %>日</strong>
+        の記録を、朝・昼・夜・間食ごとにまとめて登録できます。
+      </p>
+    </div>
+
+    <div class="hero-summary">
+      <div class="hero-total-card <%= calorie_tone_class(@period_totals[:day]) %>">
+        <p class="hero-total-label">今日の合計</p>
+        <p class="hero-total-value"><strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong></p>
+      </div>
+
+      <div class="date-switcher">
+        <%= link_to "前の日", root_path(date: (@selected_date - 1.day).iso8601, tab: @selected_tab), class: "button button-subtle" %>
+        <%= link_to "今日", root_path(tab: @selected_tab), class: "button button-primary" %>
+        <%= link_to "次の日", root_path(date: (@selected_date + 1.day).iso8601, tab: @selected_tab), class: "button button-subtle" %>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-header">
+      <div>
+        <h2>集計</h2>
+        <p>日 / 週 / 月の切り替えで、最近の総摂取カロリーを確認できます。</p>
+      </div>
+    </div>
+
+    <div class="summary-cards">
+      <article class="summary-card <%= calorie_tone_class(@period_totals[:day]) %>">
+        <p>1日</p>
+        <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
+      </article>
+      <article class="summary-card">
+        <p>週</p>
+        <strong><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
+      </article>
+      <article class="summary-card">
+        <p>月</p>
+        <strong><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
+      </article>
+    </div>
+
+    <nav class="tabs" aria-label="集計切り替え">
+      <% { "day" => "日", "week" => "週", "month" => "月" }.each do |key, label| %>
+        <%= link_to label, root_path(date: @selected_date.iso8601, tab: key), class: ["tab", ("is-active" if @selected_tab == key)] %>
+      <% end %>
+    </nav>
+
+    <div class="summary-list">
+      <% @summary_rows.each do |row| %>
+        <article class="summary-row <%= calorie_tone_class(row[:calories]) if row[:tone] != :normal %>">
+          <div>
+            <p class="summary-row-label"><%= row[:label] %></p>
+            <p class="summary-row-subtitle"><%= row[:subtitle] %></p>
+          </div>
+          <p class="summary-row-calories"><%= number_with_delimiter(row[:calories]) %> kcal</p>
+        </article>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="meal-layout">
+    <% @meal_sections.each do |section| %>
+      <section class="panel meal-panel">
+        <div class="panel-header">
+          <div>
+            <p class="meal-heading <%= meal_type_badge(section[:key]) %>"><%= section[:label] %></p>
+            <h2><%= section[:label] %>に食べたもの</h2>
+            <p>候補から選ぶだけで登録できます。</p>
+          </div>
+          <p class="panel-total"><%= number_with_delimiter(section[:total_calories]) %> kcal</p>
+        </div>
+
+        <div class="food-palette">
+          <% section[:foods].each do |food| %>
+            <%= button_to food.name, daily_food_logs_path(date: @selected_date.iso8601, tab: @selected_tab),
+              params: { daily_food_log: { food_id: food.id, meal_type: section[:key], eaten_on: @selected_date.iso8601 } },
+              class: "food-button" %>
+          <% end %>
+        </div>
+
+        <% if section[:logs].any? %>
+          <div class="log-list">
+            <% section[:logs].each do |log| %>
+              <article class="log-item">
+                <div>
+                  <p class="log-name"><%= log.food_name %></p>
+                  <p class="log-meta">登録済み</p>
+                </div>
+                <div class="log-actions">
+                  <p class="log-calories"><%= number_with_delimiter(log.calories) %> kcal</p>
+                  <%= button_to "削除", daily_food_log_path(log, date: @selected_date.iso8601, tab: @selected_tab), method: :delete, class: "button button-danger", form: { data: { turbo_confirm: "この記録を削除しますか？" } } %>
+                </div>
+              </article>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="empty-state">
+            <p>まだ記録がありません。上のボタンから追加してください。</p>
+          </div>
+        <% end %>
+      </section>
+    <% end %>
+  </section>
+
+  <section class="panel copy-panel" data-controller="copy">
+    <div class="panel-header">
+      <div>
+        <h2>AI共有用テキスト</h2>
+        <p>その日の食事内容を自然文でコピーできます。</p>
+      </div>
+      <button type="button" class="button button-primary" data-action="copy#copy">コピー</button>
+    </div>
+
+    <textarea class="input input-textarea copy-text" rows="5" readonly data-copy-target="source"><%= @daily_summary_text %></textarea>
+    <p class="copy-status" data-copy-target="status">未コピー</p>
+  </section>
+</main>
