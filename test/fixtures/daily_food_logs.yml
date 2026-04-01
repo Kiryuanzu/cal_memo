@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+today_breakfast:
+  food: breakfast_toast
+  food_name: トースト
+  calories: 220
+  eaten_on: 2026-04-01
+  meal_type: breakfast
+
+today_lunch:
+  food: lunch_curry
+  food_name: カレーライス
+  calories: 840
+  eaten_on: 2026-04-01
+  meal_type: lunch
+
+yesterday_snack:
+  food: snack_latte
+  food_name: カフェラテ
+  calories: 130
+  eaten_on: 2026-03-31
+  meal_type: snack

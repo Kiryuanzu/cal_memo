@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+breakfast_toast:
+  name: トースト
+  calories: 220
+  category: breakfast
+
+breakfast_banana:
+  name: バナナ
+  calories: 86
+  category: breakfast
+
+lunch_curry:
+  name: カレーライス
+  calories: 840
+  category: lunch_dinner
+
+snack_latte:
+  name: カフェラテ
+  calories: 130
+  category: snack
