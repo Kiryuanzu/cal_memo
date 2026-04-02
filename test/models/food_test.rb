@@ -9,8 +9,9 @@ class FoodTest < ActiveSupport::TestCase
   end
 
   test "returns foods available for meal type" do
-    assert_includes Food.available_for_meal_type(:breakfast), foods(:breakfast_toast)
+    assert_includes Food.available_for_meal_type(:breakfast), foods(:breakfast_banana)
     assert_includes Food.available_for_meal_type(:dinner), foods(:lunch_curry)
+    assert_includes Food.available_for_meal_type(:snack), foods(:snack_latte)
     assert_not_includes Food.available_for_meal_type(:breakfast), foods(:snack_latte)
   end
 end
