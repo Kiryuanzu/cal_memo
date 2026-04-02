@@ -10,7 +10,8 @@ foods_by_category = {
     { name: "ヨーグルト", calories: 110 },
     { name: "バナナ", calories: 86 },
     { name: "みかん", calories: 35 },
-    { name: "いちご", calories: 34 }
+    { name: "いちご", calories: 34 },
+    { name: "いちご（2粒）", calories: 12 }
   ],
   lunch_dinner: [
     { name: "ご飯150g", calories: 234 },
