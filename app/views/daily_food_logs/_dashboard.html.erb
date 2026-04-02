@@ -6,6 +6,13 @@
   danger_button_classes = "#{button_base_classes} bg-rose-600 text-rose-50 shadow-[0_12px_24px_rgba(159,18,57,0.18)] hover:bg-rose-500"
   section_tab_classes = "inline-flex min-h-10 items-center justify-center rounded-full border border-orange-200/70 bg-white/85 px-4 py-2 text-sm font-semibold text-orange-900 transition duration-200 hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50"
   food_button_classes = "w-full rounded-2xl border border-orange-200/70 bg-orange-50/80 px-4 py-3 text-sm font-semibold text-orange-950 transition duration-200 hover:-translate-y-0.5 hover:border-orange-300 hover:bg-white"
+  daily_target = 1_500
+  weekly_target_lower = 10_150
+  weekly_target_upper = 11_550
+  monthly_target = 40_600
+  daily_progress_percent = [(@period_totals[:day].to_f / daily_target * 100).round, 100].min
+  weekly_progress_percent = [(@period_totals[:week].to_f / weekly_target_lower * 100).round, 100].min
+  monthly_progress_percent = [(@period_totals[:month].to_f / monthly_target * 100).round, 100].min
   day_tone_classes = case @period_totals[:day]
   when 2501.. then "border-rose-300/80 bg-rose-50/90 text-rose-950"
   when 2001..2500 then "border-amber-300/80 bg-amber-50/90 text-amber-950"
@@ -18,7 +25,7 @@
     <div class="absolute -right-6 -top-10 h-36 w-36 rounded-full bg-rose-200/40 blur-2xl"></div>
     <div class="absolute -bottom-12 -left-4 h-44 w-44 rounded-full bg-amber-100/70 blur-2xl"></div>
 
-    <div class="relative z-10 flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
+    <div class="relative z-10 flex flex-col gap-6">
       <div class="max-w-2xl">
         <p class="inline-flex rounded-full border border-orange-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-orange-900 shadow-sm shadow-orange-950/5">
           1日のカロリーをさっと集計
@@ -27,24 +34,58 @@
         <h1 class="mt-3 max-w-[10ch] font-serif text-4xl leading-none tracking-tight text-stone-950 sm:text-5xl lg:text-6xl">
           カロリー計算メモ帳
         </h1>
-        <p class="mt-4 max-w-2xl text-base leading-7 text-stone-600">
-          <strong class="font-semibold text-stone-900"><%= @selected_date.year %>年<%= @selected_date.month %>月<%= @selected_date.day %>日</strong>
-          の記録を、朝・昼・夜・間食ごとにまとめて登録できます。
+        <p class="mt-4 text-sm font-semibold text-orange-900">
+          <%= @selected_date.year %>年<%= @selected_date.month %>月<%= @selected_date.day %>日の記録
         </p>
+        <p class="mt-2 max-w-2xl text-base leading-7 text-stone-600">その日の記録を、朝・昼・夜・間食ごとにまとめて登録できます。</p>
       </div>
 
-      <div class="grid gap-4 xl:justify-items-end">
-        <div class="min-w-[220px] rounded-[24px] border px-5 py-4 text-left shadow-sm shadow-stone-950/5 xl:text-right <%= day_tone_classes %>">
-          <p class="text-sm text-stone-600">今日の合計</p>
-          <p class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
-            <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
-          </p>
-        </div>
+      <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)] xl:items-stretch">
+        <section class="grid gap-4 md:grid-cols-2">
+          <div class="rounded-[28px] border px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5 <%= day_tone_classes %>">
+            <p class="text-sm text-stone-600">今日の合計</p>
+            <p class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
+              <span class="mx-1 text-stone-300">/</span>
+              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(daily_target) %> kcal</span>
+            </p>
+            <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
+              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= daily_progress_percent %>%"></div>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-stone-500">今日の合計カロリー上限: <%= number_with_delimiter(daily_target) %> kcal</p>
+          </div>
+          <div class="rounded-[28px] border border-stone-200/80 bg-white/85 px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5">
+            <p class="text-sm text-stone-600">今週の合計</p>
+            <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950 sm:text-3xl">
+              <strong><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
+              <span class="mx-1 text-stone-300">/</span>
+              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(weekly_target_lower) %> kcal</span>
+            </p>
+            <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
+              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= weekly_progress_percent %>%"></div>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-stone-500">週の総摂取カロリー目安: 約<%= number_with_delimiter(weekly_target_lower) %>〜<%= number_with_delimiter(weekly_target_upper) %> kcal</p>
+          </div>
+        </section>
+        <div class="grid gap-4">
+          <div class="rounded-[28px] border border-stone-200/80 bg-white/85 px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5">
+            <p class="text-sm text-stone-600">月の合計</p>
+            <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950 sm:text-3xl">
+              <strong><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
+              <span class="mx-1 text-stone-300">/</span>
+              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(monthly_target) %> kcal</span>
+            </p>
+            <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
+              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= monthly_progress_percent %>%"></div>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-stone-500">月の合計カロリー上限: <%= number_with_delimiter(monthly_target) %> kcal</p>
+          </div>
 
-        <div class="grid gap-2 sm:grid-cols-3 xl:w-auto">
-          <%= link_to "前の日", root_path(date: (@selected_date - 1.day).iso8601, tab: @selected_tab), class: subtle_button_classes %>
-          <%= link_to "今日", root_path(tab: @selected_tab), class: primary_button_classes %>
-          <%= link_to "次の日", root_path(date: (@selected_date + 1.day).iso8601, tab: @selected_tab), class: subtle_button_classes %>
+          <div class="grid gap-2 sm:grid-cols-3 xl:grid-cols-1">
+            <%= link_to "前の日", root_path(date: (@selected_date - 1.day).iso8601, tab: @selected_tab), class: subtle_button_classes %>
+            <%= link_to "今日", root_path(tab: @selected_tab), class: primary_button_classes %>
+            <%= link_to "次の日", root_path(date: (@selected_date + 1.day).iso8601, tab: @selected_tab), class: subtle_button_classes %>
+          </div>
         </div>
       </div>
     </div>
