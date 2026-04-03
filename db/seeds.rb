@@ -26,7 +26,8 @@ foods_by_category = {
     { name: "鶏むねサラダ", calories: 260 },
     { name: "親子丼", calories: 400 },
     { name: "カレーライス", calories: 840 },
-    { name: "ハンバーグ定食", calories: 780 },
+    { name: "外食", calories: 900 },
+    { name: "ハンバーグ定食", calories: 500 },
     { name: "焼き魚定食", calories: 540 },
     { name: "しょうが焼き定食", calories: 690 }
   ],
