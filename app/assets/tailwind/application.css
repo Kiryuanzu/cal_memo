@@ -3,4 +3,5 @@
 @theme {
   --font-sans: "Avenir Next", "Hiragino Sans", "Noto Sans JP", sans-serif;
   --font-serif: "Iowan Old Style", "Times New Roman", serif;
+  --font-display: "Hiragino Maru Gothic ProN", "Avenir Next Rounded", "Arial Rounded MT Bold", "Marker Felt", cursive;
 }
