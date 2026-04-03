@@ -12,8 +12,6 @@
 ## 動かし方
 
 ```bash
-mise install
-bin/rails db:migrate
 bin/dev
 ```
 
