@@ -17,7 +17,6 @@ foods_by_category = {
     { name: "ご飯150g", calories: 234 },
     { name: "味噌汁", calories: 40 },
     { name: "noshのお弁当", calories: 350 },
-    { name: "おにぎり", calories: 180 },
     { name: "うどん", calories: 380 },
     { name: "そば", calories: 320 },
     { name: "ミートソース", calories: 500 },
@@ -27,9 +26,13 @@ foods_by_category = {
     { name: "親子丼", calories: 400 },
     { name: "カレーライス", calories: 840 },
     { name: "外食", calories: 900 },
-    { name: "ハンバーグ定食", calories: 500 },
-    { name: "焼き魚定食", calories: 540 },
-    { name: "しょうが焼き定食", calories: 690 }
+    { name: "ハンバーグ", calories: 300 },
+    { name: "焼き魚", calories: 200 },
+    { name: "しょうが焼き", calories: 150 },
+    { name: "きゅうりの漬物", calories: 15 },
+    { name: "茹でブロッコリー", calories: 20 },
+    { name: "茹でほうれん草", calories: 15 },
+    { name: "きんぴらごぼう", calories: 40 }
   ],
   snack: [
     { name: "ミックスナッツ(少量)", calories: 15 },
