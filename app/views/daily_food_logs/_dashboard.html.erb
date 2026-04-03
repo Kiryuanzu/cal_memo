@@ -108,15 +108,27 @@
     <div class="mt-6 grid gap-4 md:grid-cols-3">
       <article class="rounded-[24px] border p-5 shadow-sm shadow-stone-950/5 <%= day_tone_classes %>">
         <p class="text-sm text-stone-600">1日</p>
-        <strong class="mt-2 block text-2xl font-extrabold tracking-tight"><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
+        <p class="mt-2 text-2xl font-extrabold tracking-tight">
+          <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
+          <span class="mx-1 text-stone-300">/</span>
+          <span class="text-lg text-stone-500"><%= number_with_delimiter(daily_target) %> kcal</span>
+        </p>
       </article>
       <article class="rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
         <p class="text-sm text-stone-600">週</p>
-        <strong class="mt-2 block text-2xl font-extrabold tracking-tight text-stone-950"><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
+        <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
+          <strong><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
+          <span class="mx-1 text-stone-300">/</span>
+          <span class="text-lg text-stone-500"><%= number_with_delimiter(weekly_target_lower) %> kcal</span>
+        </p>
       </article>
       <article class="rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
         <p class="text-sm text-stone-600">月</p>
-        <strong class="mt-2 block text-2xl font-extrabold tracking-tight text-stone-950"><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
+        <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
+          <strong><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
+          <span class="mx-1 text-stone-300">/</span>
+          <span class="text-lg text-stone-500"><%= number_with_delimiter(monthly_target) %> kcal</span>
+        </p>
       </article>
     </div>
 

@@ -65,4 +65,20 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_url(date: "2026-04-01", tab: "day")
   end
+
+  test "shows monthly summary from latest month" do
+    DailyFoodLog.create!(
+      food: foods(:lunch_curry),
+      food_name: "カレーライス",
+      calories: 840,
+      eaten_on: Date.new(2026, 2, 10),
+      meal_type: :lunch
+    )
+
+    get root_url(tab: "month", date: "2026-04-01")
+
+    assert_response :success
+    assert_operator @response.body.index("2026/4"), :<, @response.body.index("2026/3")
+    assert_operator @response.body.index("2026/3"), :<, @response.body.index("2026/2")
+  end
 end

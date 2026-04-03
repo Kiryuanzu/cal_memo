@@ -148,8 +148,8 @@ class DailyFoodLogsController < ApplicationController
     end
 
     def monthly_rows
-      starts = 5.downto(0).map { |offset| (@selected_date.beginning_of_month << offset) }
-      range = starts.first.beginning_of_month..@selected_date.end_of_month
+      starts = 6.times.map { |offset| (@selected_date.beginning_of_month << offset) }
+      range = starts.last.beginning_of_month..@selected_date.end_of_month
       totals_by_month = DailyFoodLog.within(range).group_by { |log| log.eaten_on.beginning_of_month }
 
       starts.map do |month_start|
