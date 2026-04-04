@@ -2,13 +2,18 @@
 
 日々の摂取カロリーを簡単に記録することを目的に作られたRailsアプリケーションです。
 
-## 動かし方
+## 起動方法
+
+```bash
+# 初回のみ
+bin/setup
+```
 
 ```bash
 bin/dev
+open http://localhost:3000
 ```
 
-ブラウザで `http://localhost:3000` を開くと使えます。
 
 ## テスト
 
