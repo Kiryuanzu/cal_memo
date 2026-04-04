@@ -47,8 +47,9 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_match "外食", @response.body
-    assert_match "カロリーを入力して登録します。", @response.body
+    assert_match "押すとカロリー入力欄を開きます。", @response.body
     assert_match 'name="daily_food_log[calories]"', @response.body
+    assert_match 'data-controller="manual-calorie-form"', @response.body
   end
 
   test "should create daily food log from eating out with manual calories" do
