@@ -58,7 +58,7 @@ class DailyFoodLog < ApplicationRecord
       return if food.blank?
 
       self.food_name = food.name
-      self.calories = food.calories
+      self.calories = food.manual_calories_enabled? ? calories.presence : food.calories
     end
 
     def food_category_matches_meal_type

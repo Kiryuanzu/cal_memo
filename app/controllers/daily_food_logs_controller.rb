@@ -12,7 +12,8 @@ class DailyFoodLogsController < ApplicationController
     @daily_food_log = DailyFoodLog.new(
       food: food,
       meal_type: daily_food_log_params[:meal_type],
-      eaten_on: @selected_date
+      eaten_on: @selected_date,
+      calories: food.manual_calories_enabled? ? daily_food_log_params[:calories] : food.calories
     )
 
     if @daily_food_log.save
@@ -69,7 +70,7 @@ class DailyFoodLogsController < ApplicationController
     end
 
     def daily_food_log_params
-      params.expect(daily_food_log: [ :food_id, :meal_type, :eaten_on ])
+      params.expect(daily_food_log: [ :food_id, :meal_type, :eaten_on, :calories ])
     end
 
     def parse_date(value)

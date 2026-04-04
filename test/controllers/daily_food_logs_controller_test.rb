@@ -42,6 +42,57 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url(date: "2026-04-01", tab: "day")
   end
 
+  test "should show manual calorie form for eating out" do
+    get root_url(date: "2026-04-01", tab: "day")
+
+    assert_response :success
+    assert_match "外食", @response.body
+    assert_match "カロリーを入力して登録します。", @response.body
+    assert_match 'name="daily_food_log[calories]"', @response.body
+  end
+
+  test "should create daily food log from eating out with manual calories" do
+    assert_difference("DailyFoodLog.count") do
+      post daily_food_logs_url, params: {
+        tab: "day",
+        daily_food_log: {
+          food_id: foods(:lunch_eating_out).id,
+          meal_type: "lunch",
+          eaten_on: "2026-04-01",
+          calories: "1234"
+        }
+      }
+    end
+
+    log = DailyFoodLog.find_by!(
+      food: foods(:lunch_eating_out),
+      meal_type: :lunch,
+      eaten_on: Date.new(2026, 4, 1),
+      calories: 1234
+    )
+
+    assert_equal "外食", log.food_name
+    assert_redirected_to root_url(date: "2026-04-01", tab: "day")
+  end
+
+  test "should require calories for eating out" do
+    assert_no_difference("DailyFoodLog.count") do
+      post daily_food_logs_url, params: {
+        tab: "day",
+        daily_food_log: {
+          food_id: foods(:lunch_eating_out).id,
+          meal_type: "lunch",
+          eaten_on: "2026-04-01",
+          calories: ""
+        }
+      }
+    end
+
+    assert_response :unprocessable_entity
+    assert_match "カロリーを入力して登録します。", @response.body
+    assert_match 'name="daily_food_log[calories]"', @response.body
+  end
+
   test "should reject mismatched food category" do
     assert_no_difference("DailyFoodLog.count") do
       post daily_food_logs_url, params: {

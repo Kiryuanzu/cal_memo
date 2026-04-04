@@ -4,33 +4,46 @@ breakfast_toast:
   name: トースト
   calories: 220
   category: breakfast
+  manual_calories_enabled: false
 
 breakfast_banana:
   name: バナナ
   calories: 86
   category: breakfast
+  manual_calories_enabled: false
 
 lunch_curry:
   name: カレーライス
   calories: 840
   category: lunch_dinner
+  manual_calories_enabled: false
+
+lunch_eating_out:
+  name: 外食
+  calories: 900
+  category: lunch_dinner
+  manual_calories_enabled: true
 
 snack_latte:
   name: カフェラテ
   calories: 130
   category: snack
+  manual_calories_enabled: false
 
 snack_egg:
   name: ゆで卵
   calories: 80
   category: snack
+  manual_calories_enabled: false
 
 snack_cheese:
   name: チーズ
   calories: 60
   category: snack
+  manual_calories_enabled: false
 
 snack_nuts:
   name: ミックスナッツ(少量)
   calories: 15
   category: snack
+  manual_calories_enabled: false
