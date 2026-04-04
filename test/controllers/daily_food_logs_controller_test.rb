@@ -47,9 +47,9 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_match "外食", @response.body
-    assert_match "押すとカロリー入力欄を開きます。", @response.body
     assert_match 'name="daily_food_log[calories]"', @response.body
     assert_match 'data-controller="manual-calorie-form"', @response.body
+    assert_match 'turbo:submit-end-&gt;manual-calorie-form#submitEnd', @response.body
   end
 
   test "should create daily food log from eating out with manual calories" do
@@ -76,6 +76,23 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url(date: "2026-04-01", tab: "day")
   end
 
+  test "should close manual calorie form after successful turbo stream create" do
+    post daily_food_logs_url,
+      params: {
+        tab: "day",
+        daily_food_log: {
+          food_id: foods(:lunch_eating_out).id,
+          meal_type: "lunch",
+          eaten_on: "2026-04-01",
+          calories: "1234"
+        }
+      },
+      as: :turbo_stream
+
+    assert_response :success
+    assert_no_match 'data-manual-calorie-form-open-value="true"', @response.body
+  end
+
   test "should require calories for eating out" do
     assert_no_difference("DailyFoodLog.count") do
       post daily_food_logs_url, params: {
@@ -92,6 +109,23 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_match "カロリーを入力して登録します。", @response.body
     assert_match 'name="daily_food_log[calories]"', @response.body
+  end
+
+  test "should keep manual calorie form open after invalid turbo stream create" do
+    post daily_food_logs_url,
+      params: {
+        tab: "day",
+        daily_food_log: {
+          food_id: foods(:lunch_eating_out).id,
+          meal_type: "lunch",
+          eaten_on: "2026-04-01",
+          calories: ""
+        }
+      },
+      as: :turbo_stream
+
+    assert_response :unprocessable_entity
+    assert_match 'data-manual-calorie-form-open-value="true"', @response.body
   end
 
   test "should reject mismatched food category" do

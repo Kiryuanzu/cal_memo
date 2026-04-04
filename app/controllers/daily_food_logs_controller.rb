@@ -17,6 +17,7 @@ class DailyFoodLogsController < ApplicationController
     )
 
     if @daily_food_log.save
+      @daily_food_log = nil
       load_dashboard
 
       respond_to do |format|
