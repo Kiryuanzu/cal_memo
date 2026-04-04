@@ -1,16 +1,23 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["button", "form"]
+  static targets = ["form", "foodIdInput", "foodName", "caloriesInput"]
   static values = { open: Boolean }
 
   connect() {
     this.sync()
   }
 
-  show() {
+  show(event) {
+    const { foodId, foodName, foodCalories } = event.params
+
+    this.foodIdInputTarget.value = foodId
+    this.foodNameTarget.textContent = foodName
+    this.caloriesInputTarget.value = ""
+    this.caloriesInputTarget.placeholder = foodCalories
     this.openValue = true
     this.sync()
+    this.caloriesInputTarget.focus()
   }
 
   hide() {
@@ -18,10 +25,16 @@ export default class extends Controller {
     this.sync()
   }
 
+  submitEnd(event) {
+    if (!event.detail.success) return
+
+    this.hide()
+    this.caloriesInputTarget.value = ""
+  }
+
   sync() {
     const isOpen = this.openValue
 
-    this.buttonTarget.classList.toggle("hidden", isOpen)
     this.formTarget.classList.toggle("hidden", !isOpen)
   }
 }
