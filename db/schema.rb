@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_04_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_04_010000) do
   create_table "daily_food_logs", force: :cascade do |t|
     t.integer "calories", null: false
     t.datetime "created_at", null: false
@@ -22,16 +22,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_000000) do
     t.index ["eaten_on", "meal_type"], name: "index_daily_food_logs_on_eaten_on_and_meal_type"
     t.index ["eaten_on"], name: "index_daily_food_logs_on_eaten_on"
     t.index ["food_id"], name: "index_daily_food_logs_on_food_id"
-  end
-
-  create_table "entries", force: :cascade do |t|
-    t.integer "calories", null: false
-    t.datetime "created_at", null: false
-    t.datetime "eaten_at", null: false
-    t.string "name", null: false
-    t.text "note"
-    t.datetime "updated_at", null: false
-    t.index ["eaten_at"], name: "index_entries_on_eaten_at"
   end
 
   create_table "foods", force: :cascade do |t|

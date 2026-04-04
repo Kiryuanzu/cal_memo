@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root "daily_food_logs#index"
   resources :daily_food_logs, only: [ :index, :create, :destroy ]
-  resources :entries, except: :show
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
