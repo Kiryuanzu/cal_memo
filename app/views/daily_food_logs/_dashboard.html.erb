@@ -1,26 +1,3 @@
-<%
-  panel_classes = "rounded-[28px] border border-stone-200/80 bg-white/75 p-6 shadow-[0_18px_50px_rgba(54,31,18,0.12)] backdrop-blur-xl md:p-7"
-  button_base_classes = "inline-flex min-h-11 items-center justify-center rounded-full px-4 text-sm font-semibold transition duration-200 hover:-translate-y-0.5"
-  primary_button_classes = "#{button_base_classes} bg-gradient-to-br from-orange-500 to-orange-700 text-orange-50 shadow-[0_12px_24px_rgba(154,52,18,0.22)] hover:from-orange-400 hover:to-orange-600"
-  subtle_button_classes = "#{button_base_classes} border border-stone-200/80 bg-white/80 text-stone-700 shadow-sm shadow-stone-950/5 hover:border-orange-200 hover:bg-orange-50"
-  danger_button_classes = "#{button_base_classes} bg-rose-600 text-rose-50 shadow-[0_12px_24px_rgba(159,18,57,0.18)] hover:bg-rose-500"
-  section_tab_classes = "inline-flex min-h-10 items-center justify-center rounded-full border border-orange-200/70 bg-white/85 px-4 py-2 text-sm font-semibold text-orange-900 transition duration-200 hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50"
-  food_button_classes = "w-full rounded-2xl border border-orange-200/70 bg-orange-50/80 px-4 py-3 text-sm font-semibold text-orange-950 transition duration-200 hover:-translate-y-0.5 hover:border-orange-300 hover:bg-white"
-  input_classes = "w-full rounded-2xl border border-stone-200/80 bg-white px-4 py-3 text-sm text-stone-900 shadow-inner shadow-stone-950/5 focus:border-orange-300 focus:outline-none focus:ring-4 focus:ring-orange-100"
-  daily_target = 1_500
-  weekly_target_lower = 10_150
-  weekly_target_upper = 11_550
-  monthly_target = 40_600
-  daily_progress_percent = [(@period_totals[:day].to_f / daily_target * 100).round, 100].min
-  weekly_progress_percent = [(@period_totals[:week].to_f / weekly_target_lower * 100).round, 100].min
-  monthly_progress_percent = [(@period_totals[:month].to_f / monthly_target * 100).round, 100].min
-  day_tone_classes = case @period_totals[:day]
-  when 2501.. then "border-rose-300/80 bg-rose-50/90 text-rose-950"
-  when 2001..2500 then "border-amber-300/80 bg-amber-50/90 text-amber-950"
-  else "border-stone-200/80 bg-white/80 text-stone-950"
-  end
-%>
-
 <main id="page-top" class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-10 pt-32 sm:px-6 sm:pt-36 lg:px-8">
   <header class="fixed inset-x-0 top-0 z-40 border-b border-stone-200/80 bg-white/80 shadow-[0_14px_30px_rgba(54,31,18,0.08)] backdrop-blur-xl" data-controller="section-nav">
     <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
@@ -50,29 +27,29 @@
 
       <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)] xl:items-stretch">
         <section class="grid gap-4 md:grid-cols-2">
-          <div class="rounded-[28px] border px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5 <%= day_tone_classes %>">
+          <div class="rounded-[28px] border px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5 <%= calorie_tone_classes(@period_totals[:day]) %>">
             <p class="text-sm text-stone-600">今日の合計</p>
             <p class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
               <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
               <span class="mx-1 text-stone-300">/</span>
-              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(daily_target) %> kcal</span>
+              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</span>
             </p>
             <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
-              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= daily_progress_percent %>%"></div>
+              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= progress_percent(@period_totals[:day], DashboardHelper::DAILY_TARGET) %>%"></div>
             </div>
-            <p class="mt-3 text-sm leading-6 text-stone-500">今日の合計カロリー上限: <%= number_with_delimiter(daily_target) %> kcal</p>
+            <p class="mt-3 text-sm leading-6 text-stone-500">今日の合計カロリー上限: <%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</p>
           </div>
           <div class="rounded-[28px] border border-stone-200/80 bg-white/85 px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5">
             <p class="text-sm text-stone-600">今週の合計</p>
             <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950 sm:text-3xl">
               <strong><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
               <span class="mx-1 text-stone-300">/</span>
-              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(weekly_target_lower) %> kcal</span>
+              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %> kcal</span>
             </p>
             <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
-              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= weekly_progress_percent %>%"></div>
+              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= progress_percent(@period_totals[:week], DashboardHelper::WEEKLY_TARGET_LOWER) %>%"></div>
             </div>
-            <p class="mt-3 text-sm leading-6 text-stone-500">週の総摂取カロリー目安: 約<%= number_with_delimiter(weekly_target_lower) %>〜<%= number_with_delimiter(weekly_target_upper) %> kcal</p>
+            <p class="mt-3 text-sm leading-6 text-stone-500">週の総摂取カロリー目安: 約<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %>〜<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_UPPER) %> kcal</p>
           </div>
         </section>
         <div class="grid gap-4">
@@ -81,12 +58,12 @@
             <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950 sm:text-3xl">
               <strong><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
               <span class="mx-1 text-stone-300">/</span>
-              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(monthly_target) %> kcal</span>
+              <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(DashboardHelper::MONTHLY_TARGET) %> kcal</span>
             </p>
             <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
-              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= monthly_progress_percent %>%"></div>
+              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= progress_percent(@period_totals[:month], DashboardHelper::MONTHLY_TARGET) %>%"></div>
             </div>
-            <p class="mt-3 text-sm leading-6 text-stone-500">月の合計カロリー上限: <%= number_with_delimiter(monthly_target) %> kcal</p>
+            <p class="mt-3 text-sm leading-6 text-stone-500">月の合計カロリー上限: <%= number_with_delimiter(DashboardHelper::MONTHLY_TARGET) %> kcal</p>
           </div>
 
           <div class="grid gap-2 sm:grid-cols-3 xl:grid-cols-1">
@@ -108,12 +85,12 @@
     </div>
 
     <div class="mt-6 grid gap-4 md:grid-cols-3">
-      <article class="rounded-[24px] border p-5 shadow-sm shadow-stone-950/5 <%= day_tone_classes %>">
+      <article class="rounded-[24px] border p-5 shadow-sm shadow-stone-950/5 <%= calorie_tone_classes(@period_totals[:day]) %>">
         <p class="text-sm text-stone-600">1日</p>
         <p class="mt-2 text-2xl font-extrabold tracking-tight">
           <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
           <span class="mx-1 text-stone-300">/</span>
-          <span class="text-lg text-stone-500"><%= number_with_delimiter(daily_target) %> kcal</span>
+          <span class="text-lg text-stone-500"><%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</span>
         </p>
       </article>
       <article class="rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
@@ -121,7 +98,7 @@
         <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
           <strong><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
           <span class="mx-1 text-stone-300">/</span>
-          <span class="text-lg text-stone-500"><%= number_with_delimiter(weekly_target_lower) %> kcal</span>
+          <span class="text-lg text-stone-500"><%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %> kcal</span>
         </p>
       </article>
       <article class="rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
@@ -129,7 +106,7 @@
         <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
           <strong><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
           <span class="mx-1 text-stone-300">/</span>
-          <span class="text-lg text-stone-500"><%= number_with_delimiter(monthly_target) %> kcal</span>
+          <span class="text-lg text-stone-500"><%= number_with_delimiter(DashboardHelper::MONTHLY_TARGET) %> kcal</span>
         </p>
       </article>
     </div>
@@ -143,12 +120,7 @@
 
     <div class="mt-6 grid gap-3">
       <% @summary_rows.each do |row| %>
-        <% row_tone_classes = case row[:calories]
-        when 2501.. then "border-rose-300/80 bg-rose-50/90 text-rose-950"
-        when 2001..2500 then "border-amber-300/80 bg-amber-50/90 text-amber-950"
-        else "border-stone-200/80 bg-white/90 text-stone-950"
-        end %>
-        <article class="flex flex-col gap-3 rounded-[22px] border px-5 py-4 shadow-sm shadow-stone-950/5 sm:flex-row sm:items-center sm:justify-between <%= row_tone_classes %>">
+        <article class="flex flex-col gap-3 rounded-[22px] border px-5 py-4 shadow-sm shadow-stone-950/5 sm:flex-row sm:items-center sm:justify-between <%= calorie_tone_classes(row[:calories]) %>">
           <div>
             <p class="font-semibold text-stone-950"><%= row[:label] %></p>
             <p class="text-sm text-stone-600"><%= row[:subtitle] %></p>
@@ -166,21 +138,10 @@
       <% form_open = selected_manual_food.present? && @daily_food_log&.meal_type == section[:key] %>
       <% current_manual_food = form_open ? selected_manual_food : manual_foods.first %>
       <% current_manual_calories = form_open ? @daily_food_log.calories : nil %>
-      <% meal_badge_classes = case section[:key]
-      when "breakfast" then "bg-amber-100 text-amber-900"
-      when "lunch" then "bg-orange-100 text-orange-900"
-      when "dinner" then "bg-rose-100 text-rose-900"
-      else "bg-violet-100 text-violet-900"
-      end %>
-      <% section_tone_classes = case section[:total_calories]
-      when 2501.. then "border-rose-300/80 bg-rose-50/90"
-      when 2001..2500 then "border-amber-300/80 bg-amber-50/90"
-      else "border-stone-200/80 bg-white/75"
-      end %>
-      <section id="meal-<%= section[:key] %>-section" class="scroll-mt-28 rounded-[28px] border p-6 shadow-[0_18px_50px_rgba(54,31,18,0.12)] backdrop-blur-xl md:p-7 <%= section_tone_classes %>">
+      <section id="meal-<%= section[:key] %>-section" class="scroll-mt-28 rounded-[28px] border p-6 shadow-[0_18px_50px_rgba(54,31,18,0.12)] backdrop-blur-xl md:p-7 <%= section_tone_classes(section[:total_calories]) %>">
         <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p class="inline-flex rounded-full px-3 py-1 text-sm font-extrabold <%= meal_badge_classes %>"><%= section[:label] %></p>
+            <p class="inline-flex rounded-full px-3 py-1 text-sm font-extrabold <%= meal_badge_classes(section[:key]) %>"><%= section[:label] %></p>
             <h2 class="mt-3 font-serif text-3xl leading-tight tracking-tight text-stone-950"><%= section[:label] %>に食べたもの</h2>
             <p class="mt-2 text-sm leading-6 text-stone-600">候補から選ぶだけで登録できます。</p>
           </div>
