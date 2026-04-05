@@ -1,3 +1,14 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="180" height="180" rx="32" fill="#D97706" />
+  <text
+    x="50%"
+    y="50%"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-size="110"
+    font-family="Arial, Helvetica, sans-serif"
+    font-weight="700"
+    fill="#FFFFFF">
+    C
+  </text>
 </svg>
