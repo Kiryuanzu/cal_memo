@@ -10,7 +10,6 @@ foods_by_category = {
     { name: "ヨーグルト", calories: 110, manual_calories_enabled: false },
     { name: "バナナ", calories: 86, manual_calories_enabled: false },
     { name: "みかん", calories: 35, manual_calories_enabled: false },
-    { name: "いちご", calories: 34, manual_calories_enabled: false },
     { name: "いちご（2粒）", calories: 12, manual_calories_enabled: false }
   ],
   lunch_dinner: [
@@ -20,9 +19,9 @@ foods_by_category = {
     { name: "うどん", calories: 380, manual_calories_enabled: false },
     { name: "そば", calories: 320, manual_calories_enabled: false },
     { name: "ミートソース", calories: 500, manual_calories_enabled: false },
-    { name: "豚肉と玉ねぎ煮込み", calories: 350, manual_calories_enabled: false },
-    { name: "鶏・豚の酒蒸し", calories: 250, manual_calories_enabled: false },
-    { name: "鶏むねサラダ", calories: 260, manual_calories_enabled: false },
+    { name: "豚肉と玉ねぎ煮込み", calories: 200, manual_calories_enabled: false },
+    { name: "鶏・豚の酒蒸し", calories: 200, manual_calories_enabled: false },
+    { name: "鶏むねサラダ", calories: 200, manual_calories_enabled: false },
     { name: "親子丼", calories: 400, manual_calories_enabled: false },
     { name: "カレーライス", calories: 840, manual_calories_enabled: false },
     { name: "外食", calories: 900, manual_calories_enabled: true },
@@ -32,7 +31,9 @@ foods_by_category = {
     { name: "きゅうりの漬物", calories: 15, manual_calories_enabled: false },
     { name: "茹でブロッコリー", calories: 20, manual_calories_enabled: false },
     { name: "茹でほうれん草", calories: 15, manual_calories_enabled: false },
-    { name: "きんぴらごぼう", calories: 40, manual_calories_enabled: false }
+    { name: "きんぴらごぼう", calories: 40, manual_calories_enabled: false },
+    { name: "納豆", calories: 90, manual_calories_enabled: false },
+    { name: "いちご（2粒）", calories: 12, manual_calories_enabled: false }
   ],
   snack: [
     { name: "ミックスナッツ(少量)", calories: 15, manual_calories_enabled: false },
