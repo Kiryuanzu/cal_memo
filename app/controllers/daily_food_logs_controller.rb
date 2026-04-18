@@ -111,6 +111,8 @@ class DailyFoodLogsController < ApplicationController
       }
       @summary_rows = summary_rows_for(@selected_tab)
       @daily_summary_text = DailyFoodLog.natural_language_for(@selected_date, @daily_logs)
+      weekly_logs = DailyFoodLog.includes(:food).within(week_range).chronological
+      @weekly_summary_text = DailyFoodLog.natural_language_for_week(week_range, weekly_logs)
     end
 
     def summary_rows_for(tab)

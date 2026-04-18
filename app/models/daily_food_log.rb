@@ -49,6 +49,19 @@ class DailyFoodLog < ApplicationRecord
     end
   end
 
+  def self.natural_language_for_week(range, logs)
+    logs_by_date = logs.group_by(&:eaten_on)
+    days_with_logs = logs_by_date.keys.count
+    total = logs.sum(&:calories)
+    average = days_with_logs.zero? ? 0 : (total.to_f / days_with_logs).round
+
+    header = "#{format_date(range.begin)}〜#{format_date(range.end)}の1週間の食事記録です。"
+    daily_lines = range.to_a.map { |date| natural_language_for(date, logs_by_date.fetch(date, [])) }
+    footer = "週合計は#{total}kcal、記録のある#{days_with_logs}日の1日平均は#{average}kcalでした。"
+
+    [ header, *daily_lines, footer ].join("\n")
+  end
+
   def self.format_date(date)
     "#{date.year}年#{date.month}月#{date.day}日"
   end
