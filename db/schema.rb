@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_04_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_18_132617) do
   create_table "daily_food_logs", force: :cascade do |t|
     t.integer "calories", null: false
+    t.text "comment"
     t.datetime "created_at", null: false
     t.date "eaten_on", null: false
     t.integer "food_id", null: false

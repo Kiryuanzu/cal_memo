@@ -38,7 +38,7 @@ class DailyFoodLog < ApplicationRecord
       meal_logs = grouped_logs.fetch(meal_type, [])
       next if meal_logs.empty?
 
-      items = meal_logs.map { |log| "#{log.food_name}(#{log.calories}kcal)" }.join("、")
+      items = meal_logs.map { |log| format_log_item(log) }.join("、")
       "#{meal_label(meal_type)}は#{items}"
     end
 
@@ -64,6 +64,13 @@ class DailyFoodLog < ApplicationRecord
 
   def self.format_date(date)
     "#{date.year}年#{date.month}月#{date.day}日"
+  end
+
+  def self.format_log_item(log)
+    base = "#{log.food_name}(#{log.calories}kcal)"
+    return base if log.comment.blank?
+
+    "#{base}[#{log.comment.gsub(/\s+/, ' ').strip}]"
   end
 
   private

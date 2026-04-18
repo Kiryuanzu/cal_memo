@@ -1,7 +1,7 @@
 class DailyFoodLogsController < ApplicationController
   before_action :set_selected_date
   before_action :set_selected_tab
-  before_action :set_daily_food_log, only: :destroy
+  before_action :set_daily_food_log, only: [ :update, :destroy ]
 
   def index
     load_dashboard
@@ -40,6 +40,19 @@ class DailyFoodLogsController < ApplicationController
           render :index, status: :unprocessable_entity
         end
       end
+    end
+  end
+
+  def update
+    @daily_food_log.update!(comment: params.dig(:daily_food_log, :comment))
+    load_dashboard
+
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:notice] = "コメントを保存しました。"
+        render_dashboard_updates
+      end
+      format.html { redirect_to root_path(date: @selected_date.iso8601, tab: @selected_tab), notice: "コメントを保存しました。" }
     end
   end
 
