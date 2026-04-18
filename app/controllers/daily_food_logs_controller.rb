@@ -98,9 +98,15 @@ class DailyFoodLogsController < ApplicationController
         }
       end
 
+      week_range = @selected_date.all_week
+      week_total = DailyFoodLog.total_for(week_range)
+      week_logged_days = DailyFoodLog.within(week_range).distinct.count(:eaten_on)
+      week_average = week_logged_days.zero? ? 0 : (week_total.to_f / week_logged_days).round
+
       @period_totals = {
         day: DailyFoodLog.total_for(@selected_date),
-        week: DailyFoodLog.total_for(@selected_date.all_week),
+        week: week_total,
+        week_average: week_average,
         month: DailyFoodLog.total_for(@selected_date.all_month)
       }
       @summary_rows = summary_rows_for(@selected_tab)
