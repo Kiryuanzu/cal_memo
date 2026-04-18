@@ -67,7 +67,7 @@ class DailyFoodLogsController < ApplicationController
     end
 
     def set_selected_tab
-      @selected_tab = params[:tab].in?(%w[day week month]) ? params[:tab] : "day"
+      @selected_tab = params[:tab].in?(%w[day week week_average month]) ? params[:tab] : "day"
     end
 
     def daily_food_log_params
@@ -117,6 +117,8 @@ class DailyFoodLogsController < ApplicationController
       case tab
       when "week"
         weekly_rows
+      when "week_average"
+        weekly_average_rows
       when "month"
         monthly_rows
       else
@@ -125,7 +127,7 @@ class DailyFoodLogsController < ApplicationController
     end
 
     def daily_rows
-      range = (@selected_date - 9.days)..@selected_date
+      range = @selected_date.all_week
       totals = DailyFoodLog.within(range).group(:eaten_on).sum(:calories)
 
       range.to_a.reverse.map do |date|
@@ -150,6 +152,27 @@ class DailyFoodLogsController < ApplicationController
           label: "#{week_start.month}/#{week_start.day} - #{week_end.month}/#{week_end.day}",
           subtitle: "週合計",
           calories: totals_by_week.fetch(week_start, []).sum(&:calories),
+          tone: :normal
+        }
+      end
+    end
+
+    def weekly_average_rows
+      starts = 7.times.map { |offset| @selected_date.beginning_of_week - offset.weeks }
+      range = starts.last..@selected_date.end_of_week
+      logs_by_week = DailyFoodLog.within(range).group_by { |log| log.eaten_on.beginning_of_week }
+
+      starts.map do |week_start|
+        week_end = week_start.end_of_week
+        week_logs = logs_by_week.fetch(week_start, [])
+        days_with_logs = week_logs.map(&:eaten_on).uniq.count
+        total = week_logs.sum(&:calories)
+        average = days_with_logs.zero? ? 0 : (total.to_f / days_with_logs).round
+
+        {
+          label: "#{week_start.month}/#{week_start.day} - #{week_end.month}/#{week_end.day}",
+          subtitle: "1日平均（記録#{days_with_logs}日）",
+          calories: average,
           tone: :normal
         }
       end
