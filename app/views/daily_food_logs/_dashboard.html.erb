@@ -38,6 +38,11 @@
               <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= progress_percent(@period_totals[:day], DashboardHelper::DAILY_TARGET) %>%"></div>
             </div>
             <p class="mt-3 text-sm leading-6 text-stone-500">合計カロリー上限の目安: <%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</p>
+            <p class="mt-1 text-sm leading-6 text-stone-500">
+              タンパク質: <strong class="text-stone-800"><%= @protein_summary[:day_total] %> g</strong>
+              <span class="text-stone-300">/</span>
+              <span><%= @protein_summary[:daily_target] %> g</span>
+            </p>
           </div>
           <div class="rounded-[28px] border border-stone-200/80 bg-white/85 px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5">
             <p class="text-sm text-stone-600">今週の合計</p>
@@ -141,6 +146,25 @@
       </p>
     <% end %>
 
+    <% if @selected_tab.in?(%w[week week_average]) %>
+      <article class="mt-6 rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
+        <p class="text-sm text-stone-600">今週のタンパク質</p>
+        <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
+          <strong><%= @protein_summary[:week_total] %> g</strong>
+          <span class="mx-1 text-stone-300">/</span>
+          <span class="text-lg text-stone-500"><%= @protein_summary[:week_target] %> g</span>
+        </p>
+        <p class="mt-2 text-sm text-stone-500">1日平均: <%= @protein_summary[:week_average] %> g（目標 <%= @protein_summary[:daily_target] %> g/日）</p>
+        <p class="text-sm text-stone-500">
+          <% if @protein_summary[:deficit].positive? %>
+            不足: <%= @protein_summary[:deficit] %> g
+          <% else %>
+            達成済み（+<%= -@protein_summary[:deficit] %> g）
+          <% end %>
+        </p>
+      </article>
+    <% end %>
+
     <div class="mt-6 grid gap-3">
       <% @summary_rows.each do |row| %>
         <article class="flex flex-col gap-3 rounded-[22px] border px-5 py-4 shadow-sm shadow-stone-950/5 sm:flex-row sm:items-center sm:justify-between <%= calorie_tone_classes(row[:calories]) %>">
@@ -148,7 +172,12 @@
             <p class="font-semibold text-stone-950"><%= row[:label] %></p>
             <p class="text-sm text-stone-600"><%= row[:subtitle] %></p>
           </div>
-          <p class="text-lg font-extrabold tracking-tight"><%= number_with_delimiter(row[:calories]) %> kcal</p>
+          <div class="sm:text-right">
+            <p class="text-lg font-extrabold tracking-tight"><%= number_with_delimiter(row[:calories]) %> kcal</p>
+            <% if row[:protein_g] %>
+              <p class="text-xs text-stone-500">タンパク質 <%= row[:protein_g] %> g</p>
+            <% end %>
+          </div>
         </article>
       <% end %>
     </div>

@@ -3,6 +3,8 @@ module DashboardHelper
   WEEKLY_TARGET_LOWER = 10_150
   WEEKLY_TARGET_UPPER = 11_550
   MONTHLY_TARGET = 40_600
+  DAILY_PROTEIN_TARGET = 60
+  WEEKLY_PROTEIN_TARGET = 420
 
   BUTTON_BASE_CLASSES = "inline-flex min-h-11 items-center justify-center rounded-full px-4 text-sm font-semibold transition duration-200 hover:-translate-y-0.5"
 

@@ -13,6 +13,8 @@ class Food < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :category }
   validates :calories, presence: true,
                        numericality: { only_integer: true, greater_than: 0 }
+  validates :protein_g, presence: true,
+                        numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   scope :alphabetical, -> { order(:name) }
 

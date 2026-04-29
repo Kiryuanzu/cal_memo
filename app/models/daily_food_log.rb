@@ -16,6 +16,8 @@ class DailyFoodLog < ApplicationRecord
   validates :food_name, presence: true
   validates :calories, presence: true,
                        numericality: { only_integer: true, greater_than: 0 }
+  validates :protein_g, presence: true,
+                        numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   validate :food_category_matches_meal_type
 
@@ -79,6 +81,7 @@ class DailyFoodLog < ApplicationRecord
 
       self.food_name = food.name
       self.calories = food.manual_calories_enabled? ? calories.presence : food.calories
+      self.protein_g = food.protein_g
     end
 
     def food_category_matches_meal_type

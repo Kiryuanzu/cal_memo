@@ -116,11 +116,23 @@ class DailyFoodLogsController < ApplicationController
       week_logged_days = DailyFoodLog.within(week_range).distinct.count(:eaten_on)
       week_average = week_logged_days.zero? ? 0 : (week_total.to_f / week_logged_days).round
 
+      day_protein_total = @daily_logs.sum(&:protein_g)
+      week_protein_total = DailyFoodLog.within(week_range).sum(:protein_g)
+      week_protein_average = week_logged_days.zero? ? 0 : (week_protein_total.to_f / week_logged_days).round
+
       @period_totals = {
         day: DailyFoodLog.total_for(@selected_date),
         week: week_total,
         week_average: week_average,
         month: DailyFoodLog.total_for(@selected_date.all_month)
+      }
+      @protein_summary = {
+        day_total: day_protein_total,
+        daily_target: DashboardHelper::DAILY_PROTEIN_TARGET,
+        week_total: week_protein_total,
+        week_target: DashboardHelper::WEEKLY_PROTEIN_TARGET,
+        week_average: week_protein_average,
+        deficit: DashboardHelper::WEEKLY_PROTEIN_TARGET - week_protein_total
       }
       @summary_rows = summary_rows_for(@selected_tab)
       @daily_summary_text = DailyFoodLog.natural_language_for(@selected_date, @daily_logs)
@@ -144,12 +156,14 @@ class DailyFoodLogsController < ApplicationController
     def daily_rows
       range = @selected_date.all_week
       totals = DailyFoodLog.within(range).group(:eaten_on).sum(:calories)
+      protein_totals = DailyFoodLog.within(range).group(:eaten_on).sum(:protein_g)
 
       range.to_a.reverse.map do |date|
         {
           label: "#{date.month}/#{date.day}",
           subtitle: japanese_wday(date),
           calories: totals.fetch(date, 0),
+          protein_g: protein_totals.fetch(date, 0),
           tone: calorie_tone(totals.fetch(date, 0))
         }
       end
@@ -162,11 +176,13 @@ class DailyFoodLogsController < ApplicationController
 
       starts.map do |week_start|
         week_end = week_start.end_of_week
+        week_logs = totals_by_week.fetch(week_start, [])
 
         {
           label: "#{week_start.month}/#{week_start.day} - #{week_end.month}/#{week_end.day}",
           subtitle: "週合計",
-          calories: totals_by_week.fetch(week_start, []).sum(&:calories),
+          calories: week_logs.sum(&:calories),
+          protein_g: week_logs.sum(&:protein_g),
           tone: :normal
         }
       end
