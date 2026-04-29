@@ -23,6 +23,7 @@ foods_by_category = {
     { name: "鶏・豚の酒蒸し", calories: 200, protein_g: 25, manual_calories_enabled: false },
     { name: "鶏むねサラダ", calories: 200, protein_g: 25, manual_calories_enabled: false },
     { name: "鶏ささみ（2本）", calories: 100, protein_g: 22, manual_calories_enabled: false },
+    { name: "鶏のさっぱり煮（手羽元1本）", calories: 220, protein_g: 10, manual_calories_enabled: false },
     { name: "親子丼", calories: 400, protein_g: 20, manual_calories_enabled: false },
     { name: "カレーライス", calories: 840, protein_g: 20, manual_calories_enabled: false },
     { name: "外食", calories: 900, protein_g: 25, manual_calories_enabled: true },
