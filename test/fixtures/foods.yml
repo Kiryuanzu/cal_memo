@@ -47,3 +47,15 @@ snack_nuts:
   calories: 15
   category: snack
   manual_calories_enabled: false
+
+snack_japanese_sweets:
+  name: 和菓子
+  calories: 200
+  category: snack
+  manual_calories_enabled: true
+
+snack_western_sweets:
+  name: 洋菓子
+  calories: 300
+  category: snack
+  manual_calories_enabled: true

@@ -52,6 +52,16 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
     assert_match 'turbo:submit-end-&gt;manual-calorie-form#submitEnd', @response.body
   end
 
+  test "should show manual calorie form for snack sweets" do
+    get root_url(date: "2026-04-01", tab: "day")
+
+    assert_response :success
+    assert_match "和菓子", @response.body
+    assert_match "洋菓子", @response.body
+    assert_match 'data-manual-calorie-form-food-name-param="和菓子"', @response.body
+    assert_match 'data-manual-calorie-form-food-name-param="洋菓子"', @response.body
+  end
+
   test "should create daily food log from eating out with manual calories" do
     assert_difference("DailyFoodLog.count") do
       post daily_food_logs_url, params: {
@@ -73,6 +83,30 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert_equal "外食", log.food_name
+    assert_redirected_to root_url(date: "2026-04-01", tab: "day")
+  end
+
+  test "should create daily food log from snack sweets with manual calories" do
+    assert_difference("DailyFoodLog.count") do
+      post daily_food_logs_url, params: {
+        tab: "day",
+        daily_food_log: {
+          food_id: foods(:snack_japanese_sweets).id,
+          meal_type: "snack",
+          eaten_on: "2026-04-01",
+          calories: "210"
+        }
+      }
+    end
+
+    log = DailyFoodLog.find_by!(
+      food: foods(:snack_japanese_sweets),
+      meal_type: :snack,
+      eaten_on: Date.new(2026, 4, 1),
+      calories: 210
+    )
+
+    assert_equal "和菓子", log.food_name
     assert_redirected_to root_url(date: "2026-04-01", tab: "day")
   end
 
