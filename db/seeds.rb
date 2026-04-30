@@ -3,18 +3,24 @@
 foods_by_category = {
   breakfast: [
     { name: "食パン6枚切り", calories: 149, protein_g: 6, manual_calories_enabled: false },
+    { name: "ご飯100g", calories: 156, protein_g: 3, manual_calories_enabled: false },
+    { name: "ご飯120g", calories: 187, protein_g: 3, manual_calories_enabled: false },
     { name: "ご飯150g", calories: 234, protein_g: 4, manual_calories_enabled: false },
     { name: "納豆", calories: 90, protein_g: 8, manual_calories_enabled: false },
     { name: "ゆで卵", calories: 80, protein_g: 6, manual_calories_enabled: false },
     { name: "味噌汁", calories: 40, protein_g: 3, manual_calories_enabled: false },
+    { name: "豆腐入り味噌汁", calories: 70, protein_g: 6, manual_calories_enabled: false },
     { name: "ヨーグルト", calories: 110, protein_g: 5, manual_calories_enabled: false },
     { name: "バナナ", calories: 86, protein_g: 1, manual_calories_enabled: false },
     { name: "みかん", calories: 35, protein_g: 1, manual_calories_enabled: false },
     { name: "いちご（2粒）", calories: 12, protein_g: 0, manual_calories_enabled: false }
   ],
   lunch_dinner: [
+    { name: "ご飯100g", calories: 156, protein_g: 3, manual_calories_enabled: false },
+    { name: "ご飯120g", calories: 187, protein_g: 3, manual_calories_enabled: false },
     { name: "ご飯150g", calories: 234, protein_g: 4, manual_calories_enabled: false },
     { name: "味噌汁", calories: 40, protein_g: 3, manual_calories_enabled: false },
+    { name: "豆腐入り味噌汁", calories: 70, protein_g: 6, manual_calories_enabled: false },
     { name: "noshのお弁当", calories: 350, protein_g: 25, manual_calories_enabled: false },
     { name: "うどん", calories: 230, protein_g: 7, manual_calories_enabled: false },
     { name: "そば", calories: 320, protein_g: 11, manual_calories_enabled: false },
@@ -23,6 +29,7 @@ foods_by_category = {
     { name: "鶏・豚の酒蒸し", calories: 200, protein_g: 25, manual_calories_enabled: false },
     { name: "鶏むねサラダ", calories: 200, protein_g: 25, manual_calories_enabled: false },
     { name: "鶏ささみ（2本）", calories: 100, protein_g: 22, manual_calories_enabled: false },
+    { name: "サラダチキン（3切れ）", calories: 60, protein_g: 12, manual_calories_enabled: false },
     { name: "鶏のさっぱり煮（手羽元1本）", calories: 220, protein_g: 10, manual_calories_enabled: false },
     { name: "親子丼", calories: 400, protein_g: 20, manual_calories_enabled: false },
     { name: "カレーライス", calories: 840, protein_g: 20, manual_calories_enabled: false },
