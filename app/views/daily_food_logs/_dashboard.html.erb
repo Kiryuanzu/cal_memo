@@ -9,6 +9,7 @@
         <button type="button" class="<%= section_tab_classes %>" data-action="section-nav#scroll" data-section-nav-section-id-param="summary-section">集計</button>
         <button type="button" class="<%= section_tab_classes %>" data-action="section-nav#scroll" data-section-nav-section-id-param="input-section">入力</button>
         <button type="button" class="<%= section_tab_classes %>" data-action="section-nav#scroll" data-section-nav-section-id-param="share-section">AI共有</button>
+        <%= link_to "食品一覧", foods_path, class: section_tab_classes, data: { turbo_frame: "_top" } %>
       </nav>
     </div>
   </header>
