@@ -19,7 +19,10 @@ class Food < ApplicationRecord
   scope :alphabetical, -> { order(:name) }
 
   def self.available_for_meal_type(meal_type)
-    where(category: category_for_meal_type(meal_type)).alphabetical
+    counts = DailyFoodLog.group(:food_id).count
+    where(category: category_for_meal_type(meal_type))
+      .to_a
+      .sort_by { |food| [ -counts.fetch(food.id, 0), food.name ] }
   end
 
   def self.category_for_meal_type(meal_type)
