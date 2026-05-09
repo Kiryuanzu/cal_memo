@@ -1,11 +1,11 @@
-<main id="page-top" class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-10 pt-32 sm:px-6 sm:pt-36 lg:px-8">
-  <header class="fixed inset-x-0 top-0 z-40 border-b border-stone-200/80 bg-white/80 shadow-[0_14px_30px_rgba(54,31,18,0.08)] backdrop-blur-xl" data-controller="section-nav">
-    <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-      <button type="button" class="inline-flex min-h-11 items-center rounded-full bg-white/85 px-4 text-left font-display text-sm tracking-[0.18em] text-stone-950 transition duration-200 hover:-translate-y-0.5 hover:bg-white" data-action="section-nav#scroll" data-section-nav-section-id-param="page-top">
+<main id="page-top" class="<%= page_shell_classes %>">
+  <header class="<%= top_bar_classes %>" data-controller="section-nav">
+    <div class="<%= top_bar_inner_classes %>">
+      <button type="button" class="<%= brand_control_classes %>" data-action="section-nav#scroll" data-section-nav-section-id-param="page-top">
         CALORIE MEMO BOOK
       </button>
 
-      <nav class="flex flex-wrap gap-2" aria-label="画面内移動">
+      <nav class="<%= nav_group_classes %>" aria-label="画面内移動">
         <button type="button" class="<%= section_tab_classes %>" data-action="section-nav#scroll" data-section-nav-section-id-param="summary-section">集計</button>
         <button type="button" class="<%= section_tab_classes %>" data-action="section-nav#scroll" data-section-nav-section-id-param="input-section">入力</button>
         <button type="button" class="<%= section_tab_classes %>" data-action="section-nav#scroll" data-section-nav-section-id-param="share-section">AI共有</button>
@@ -14,13 +14,13 @@
     </div>
   </header>
 
-  <section class="relative overflow-hidden rounded-[32px] border border-stone-200/80 bg-gradient-to-br from-white/90 via-orange-50/90 to-rose-50/80 p-8 shadow-[0_18px_50px_rgba(54,31,18,0.12)] backdrop-blur-xl md:p-10">
+  <section class="<%= hero_panel_classes %>">
     <div class="absolute -right-6 -top-10 h-36 w-36 rounded-full bg-rose-200/40 blur-2xl"></div>
     <div class="absolute -bottom-12 -left-4 h-44 w-44 rounded-full bg-amber-100/70 blur-2xl"></div>
 
     <div class="relative z-10 flex flex-col gap-6">
       <div class="max-w-2xl">
-        <p class="mt-4 font-display text-3xl leading-none tracking-[0.14em] text-stone-950 sm:text-4xl lg:text-5xl">CALORIE MEMO BOOK</p>
+        <p class="<%= hero_title_classes %>">CALORIE MEMO BOOK</p>
         <p class="mt-5 text-base font-semibold text-orange-900 sm:text-lg">
           <%= @selected_date.year %>年<%= @selected_date.month %>月<%= @selected_date.day %>日の記録
         </p>
@@ -28,55 +28,55 @@
 
       <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)] xl:items-stretch">
         <section class="grid gap-4 md:grid-cols-2">
-          <div class="rounded-[28px] border px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5 <%= calorie_tone_classes(@period_totals[:day]) %>">
-            <p class="text-sm text-stone-600">今日の合計</p>
-            <p class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
+          <div class="<%= large_metric_card_classes(calorie_tone_classes(@period_totals[:day])) %>">
+            <p class="<%= metric_label_classes %>">今日の合計</p>
+            <p class="<%= metric_value_classes(color: false) %>">
               <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
               <span class="mx-1 text-stone-300">/</span>
               <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</span>
             </p>
-            <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
-              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= progress_percent(@period_totals[:day], DashboardHelper::DAILY_TARGET) %>%"></div>
+            <div class="<%= progress_track_classes %>">
+              <div class="<%= progress_bar_classes %>" style="width: <%= progress_percent(@period_totals[:day], DashboardHelper::DAILY_TARGET) %>%"></div>
             </div>
-            <p class="mt-3 text-sm leading-6 text-stone-500">合計カロリー上限の目安: <%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</p>
-            <p class="mt-1 text-sm leading-6 text-stone-500">
+            <p class="<%= supporting_text_classes %>">合計カロリー上限の目安: <%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</p>
+            <p class="<%= supporting_text_classes(spacing: "mt-1") %>">
               タンパク質: <strong class="text-stone-800"><%= @protein_summary[:day_total] %> g</strong>
               <span class="text-stone-300">/</span>
               <span><%= @protein_summary[:daily_target] %> g</span>
             </p>
           </div>
-          <div class="rounded-[28px] border border-stone-200/80 bg-white/85 px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5">
-            <p class="text-sm text-stone-600">今週の合計</p>
-            <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950 sm:text-3xl">
+          <div class="<%= large_metric_card_classes %>">
+            <p class="<%= metric_label_classes %>">今週の合計</p>
+            <p class="<%= metric_value_classes %>">
               <strong><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
               <span class="mx-1 text-stone-300">/</span>
               <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %> kcal</span>
             </p>
-            <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
-              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= progress_percent(@period_totals[:week], DashboardHelper::WEEKLY_TARGET_LOWER) %>%"></div>
+            <div class="<%= progress_track_classes %>">
+              <div class="<%= progress_bar_classes %>" style="width: <%= progress_percent(@period_totals[:week], DashboardHelper::WEEKLY_TARGET_LOWER) %>%"></div>
             </div>
-            <p class="mt-3 text-sm leading-6 text-stone-500">週の総摂取カロリー目安: 約<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %>〜<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_UPPER) %> kcal</p>
+            <p class="<%= supporting_text_classes %>">週の総摂取カロリー目安: 約<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %>〜<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_UPPER) %> kcal</p>
           </div>
         </section>
         <div class="grid gap-4">
-          <div class="rounded-[28px] border border-stone-200/80 bg-white/85 px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5">
-            <p class="text-sm text-stone-600">今週の平均</p>
-            <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950 sm:text-3xl">
+          <div class="<%= large_metric_card_classes %>">
+            <p class="<%= metric_label_classes %>">今週の平均</p>
+            <p class="<%= metric_value_classes %>">
               <strong><%= number_with_delimiter(@period_totals[:week_average]) %> kcal</strong>
               <span class="ml-2 text-base font-semibold text-stone-500 sm:text-lg">/ 日</span>
             </p>
           </div>
-          <div class="rounded-[28px] border border-stone-200/80 bg-white/85 px-5 py-5 shadow-[0_14px_30px_rgba(54,31,18,0.08)] shadow-stone-950/5">
-            <p class="text-sm text-stone-600">月の合計</p>
-            <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950 sm:text-3xl">
+          <div class="<%= large_metric_card_classes %>">
+            <p class="<%= metric_label_classes %>">月の合計</p>
+            <p class="<%= metric_value_classes %>">
               <strong><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
               <span class="mx-1 text-stone-300">/</span>
               <span class="text-xl text-stone-500 sm:text-2xl"><%= number_with_delimiter(DashboardHelper::MONTHLY_TARGET) %> kcal</span>
             </p>
-            <div class="mt-4 h-3 overflow-hidden rounded-full bg-stone-200/80">
-              <div class="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700" style="width: <%= progress_percent(@period_totals[:month], DashboardHelper::MONTHLY_TARGET) %>%"></div>
+            <div class="<%= progress_track_classes %>">
+              <div class="<%= progress_bar_classes %>" style="width: <%= progress_percent(@period_totals[:month], DashboardHelper::MONTHLY_TARGET) %>%"></div>
             </div>
-            <p class="mt-3 text-sm leading-6 text-stone-500">月の合計カロリー上限: <%= number_with_delimiter(DashboardHelper::MONTHLY_TARGET) %> kcal</p>
+            <p class="<%= supporting_text_classes %>">月の合計カロリー上限: <%= number_with_delimiter(DashboardHelper::MONTHLY_TARGET) %> kcal</p>
           </div>
 
           <div class="grid gap-2 sm:grid-cols-3 xl:grid-cols-1">
@@ -92,30 +92,30 @@
   <section id="summary-section" class="<%= panel_classes %> scroll-mt-28">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
-        <h2 class="font-serif text-3xl leading-tight tracking-tight text-stone-950">集計</h2>
-        <p class="mt-2 text-sm leading-6 text-stone-600">日 / 週 / 月の切り替えで、最近の総摂取カロリーを確認できます。</p>
+        <h2 class="<%= section_title_classes %>">集計</h2>
+        <p class="<%= section_description_classes %>">日 / 週 / 月の切り替えで、最近の総摂取カロリーを確認できます。</p>
       </div>
     </div>
 
     <div class="mt-6 grid gap-4 md:grid-cols-3">
-      <article class="rounded-[24px] border p-5 shadow-sm shadow-stone-950/5 <%= calorie_tone_classes(@period_totals[:day]) %>">
-        <p class="text-sm text-stone-600">1日</p>
+      <article class="<%= summary_metric_card_classes(calorie_tone_classes(@period_totals[:day])) %>">
+        <p class="<%= metric_label_classes %>">1日</p>
         <p class="mt-2 text-2xl font-extrabold tracking-tight">
           <strong><%= number_with_delimiter(@period_totals[:day]) %> kcal</strong>
           <span class="mx-1 text-stone-300">/</span>
           <span class="text-lg text-stone-500"><%= number_with_delimiter(DashboardHelper::DAILY_TARGET) %> kcal</span>
         </p>
       </article>
-      <article class="rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
-        <p class="text-sm text-stone-600">週</p>
+      <article class="<%= summary_metric_card_classes %>">
+        <p class="<%= metric_label_classes %>">週</p>
         <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
           <strong><%= number_with_delimiter(@period_totals[:week]) %> kcal</strong>
           <span class="mx-1 text-stone-300">/</span>
           <span class="text-lg text-stone-500"><%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %> kcal</span>
         </p>
       </article>
-      <article class="rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
-        <p class="text-sm text-stone-600">月</p>
+      <article class="<%= summary_metric_card_classes %>">
+        <p class="<%= metric_label_classes %>">月</p>
         <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
           <strong><%= number_with_delimiter(@period_totals[:month]) %> kcal</strong>
           <span class="mx-1 text-stone-300">/</span>
@@ -126,8 +126,7 @@
 
     <nav class="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4" aria-label="集計切り替え">
       <% { "day" => "日", "week" => "週(合計)", "week_average" => "週(平均)", "month" => "月" }.each do |key, label| %>
-        <% tab_classes = @selected_tab == key ? "inline-flex min-h-12 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-orange-700 px-4 text-sm font-semibold text-orange-50 shadow-[0_12px_24px_rgba(154,52,18,0.22)]" : "inline-flex min-h-12 items-center justify-center rounded-full border border-stone-200/80 bg-white/85 px-4 text-sm font-semibold text-stone-700 shadow-sm shadow-stone-950/5 transition duration-200 hover:-translate-y-0.5 hover:border-orange-200 hover:bg-orange-50" %>
-        <%= link_to label, root_path(date: @selected_date.iso8601, tab: key), class: tab_classes %>
+        <%= link_to label, root_path(date: @selected_date.iso8601, tab: key), class: period_tab_classes(@selected_tab == key) %>
       <% end %>
     </nav>
 
@@ -148,8 +147,8 @@
     <% end %>
 
     <% if @selected_tab.in?(%w[week week_average]) %>
-      <article class="mt-6 rounded-[24px] border border-stone-200/80 bg-white/85 p-5 shadow-sm shadow-stone-950/5">
-        <p class="text-sm text-stone-600">今週のタンパク質</p>
+      <article class="mt-6 <%= card_classes %>">
+        <p class="<%= metric_label_classes %>">今週のタンパク質</p>
         <p class="mt-2 text-2xl font-extrabold tracking-tight text-stone-950">
           <strong><%= @protein_summary[:week_total] %> g</strong>
           <span class="mx-1 text-stone-300">/</span>
@@ -168,7 +167,7 @@
 
     <div class="mt-6 grid gap-3">
       <% @summary_rows.each do |row| %>
-        <article class="flex flex-col gap-3 rounded-[22px] border px-5 py-4 shadow-sm shadow-stone-950/5 sm:flex-row sm:items-center sm:justify-between <%= calorie_tone_classes(row[:calories]) %>">
+        <article class="<%= summary_row_classes(row[:calories]) %>">
           <div>
             <p class="font-semibold text-stone-950"><%= row[:label] %></p>
             <p class="text-sm text-stone-600"><%= row[:subtitle] %></p>
@@ -191,12 +190,12 @@
       <% form_open = selected_manual_food.present? && @daily_food_log&.meal_type == section[:key] %>
       <% current_manual_food = form_open ? selected_manual_food : manual_foods.first %>
       <% current_manual_calories = form_open ? @daily_food_log.calories : nil %>
-      <section id="meal-<%= section[:key] %>-section" class="scroll-mt-28 rounded-[28px] border p-6 shadow-[0_18px_50px_rgba(54,31,18,0.12)] backdrop-blur-xl md:p-7 <%= section_tone_classes(section[:total_calories]) %>">
+      <section id="meal-<%= section[:key] %>-section" class="<%= meal_panel_classes(section[:total_calories]) %>">
         <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p class="inline-flex rounded-full px-3 py-1 text-sm font-extrabold <%= meal_badge_classes(section[:key]) %>"><%= section[:label] %></p>
-            <h2 class="mt-3 font-serif text-3xl leading-tight tracking-tight text-stone-950"><%= section[:label] %>に食べたもの</h2>
-            <p class="mt-2 text-sm leading-6 text-stone-600">候補から選ぶだけで登録できます。</p>
+            <p class="<%= meal_badge_wrapper_classes(section[:key]) %>"><%= section[:label] %></p>
+            <h2 class="mt-3 <%= section_title_classes %>"><%= section[:label] %>に食べたもの</h2>
+            <p class="<%= section_description_classes %>">候補から選ぶだけで登録できます。</p>
           </div>
           <p class="text-lg font-extrabold tracking-tight text-stone-950"><%= number_with_delimiter(section[:total_calories]) %> kcal</p>
         </div>
@@ -215,7 +214,7 @@
           <% end %>
 
           <% if manual_foods.any? %>
-            <%= form_with url: daily_food_logs_path(date: @selected_date.iso8601, tab: @selected_tab), method: :post, class: "hidden rounded-[22px] border border-orange-200/70 bg-orange-50/80 p-4 shadow-sm shadow-stone-950/5 sm:col-span-2 xl:col-span-3", data: { action: "turbo:submit-end->manual-calorie-form#submitEnd", manual_calorie_form_target: "form" } do |form| %>
+            <%= form_with url: daily_food_logs_path(date: @selected_date.iso8601, tab: @selected_tab), method: :post, class: manual_calorie_form_classes, data: { action: "turbo:submit-end->manual-calorie-form#submitEnd", manual_calorie_form_target: "form" } do |form| %>
               <%= form.hidden_field :food_id, name: "daily_food_log[food_id]", value: current_manual_food&.id, data: { manual_calorie_form_target: "foodIdInput" } %>
               <%= form.hidden_field :meal_type, name: "daily_food_log[meal_type]", value: section[:key] %>
               <%= form.hidden_field :eaten_on, name: "daily_food_log[eaten_on]", value: @selected_date.iso8601 %>
@@ -229,7 +228,7 @@
               </div>
 
               <div class="mt-3">
-                <%= form.label :calories, "カロリー", class: "mb-2 block text-sm font-semibold text-stone-700" %>
+                <%= form.label :calories, "カロリー", class: form_label_classes %>
                 <%= form.number_field :calories,
                   name: "daily_food_log[calories]",
                   min: 1,
@@ -248,7 +247,7 @@
         <% if section[:logs].any? %>
           <div class="mt-5 grid gap-3">
             <% section[:logs].each do |log| %>
-              <article class="rounded-[22px] border border-stone-200/80 bg-white/90 px-4 py-4 shadow-sm shadow-stone-950/5">
+              <article class="<%= compact_card_classes %>">
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p class="font-semibold text-stone-950"><%= log.food_name %></p>
@@ -281,7 +280,7 @@
             <% end %>
           </div>
         <% else %>
-          <div class="mt-5 rounded-[22px] border border-dashed border-stone-300/80 bg-white/60 px-5 py-8 text-center text-sm text-stone-600">
+          <div class="<%= empty_state_classes %>">
             まだ記録がありません。上のボタンから追加してください。
           </div>
         <% end %>
@@ -291,8 +290,8 @@
 
   <section id="share-section" class="<%= panel_classes %> scroll-mt-28">
     <div>
-      <h2 class="font-serif text-3xl leading-tight tracking-tight text-stone-950">AI共有用テキスト</h2>
-      <p class="mt-2 text-sm leading-6 text-stone-600">食事内容を自然文でコピーできます。</p>
+      <h2 class="<%= section_title_classes %>">AI共有用テキスト</h2>
+      <p class="<%= section_description_classes %>">食事内容を自然文でコピーできます。</p>
     </div>
 
     <div class="mt-6 grid gap-6">
@@ -301,7 +300,7 @@
           <h3 class="font-semibold text-stone-900">その日分</h3>
           <button type="button" class="<%= primary_button_classes %>" data-action="copy#copy">コピー</button>
         </div>
-        <textarea class="mt-3 min-h-36 w-full rounded-[22px] border border-stone-200/80 bg-white/90 px-4 py-4 text-sm leading-7 text-stone-700 shadow-inner shadow-stone-950/5 focus:border-orange-300 focus:outline-none focus:ring-4 focus:ring-orange-100" rows="5" readonly data-copy-target="source"><%= @daily_summary_text %></textarea>
+        <textarea class="<%= textarea_classes %>" rows="5" readonly data-copy-target="source"><%= @daily_summary_text %></textarea>
         <p class="mt-3 text-sm text-stone-500" data-copy-target="status"></p>
       </div>
 
@@ -310,7 +309,7 @@
           <h3 class="font-semibold text-stone-900">1週間分（<%= @selected_date.beginning_of_week.month %>/<%= @selected_date.beginning_of_week.day %> - <%= @selected_date.end_of_week.month %>/<%= @selected_date.end_of_week.day %>）</h3>
           <button type="button" class="<%= primary_button_classes %>" data-action="copy#copy">コピー</button>
         </div>
-        <textarea class="mt-3 min-h-36 w-full rounded-[22px] border border-stone-200/80 bg-white/90 px-4 py-4 text-sm leading-7 text-stone-700 shadow-inner shadow-stone-950/5 focus:border-orange-300 focus:outline-none focus:ring-4 focus:ring-orange-100" rows="9" readonly data-copy-target="source"><%= @weekly_summary_text %></textarea>
+        <textarea class="<%= textarea_classes %>" rows="9" readonly data-copy-target="source"><%= @weekly_summary_text %></textarea>
         <p class="mt-3 text-sm text-stone-500" data-copy-target="status"></p>
       </div>
     </div>

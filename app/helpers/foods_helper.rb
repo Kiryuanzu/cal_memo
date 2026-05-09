@@ -1,4 +1,12 @@
 module FoodsHelper
+  def food_list_item_classes
+    "flex items-center justify-between gap-3 rounded-xl border border-stone-200/80 bg-white/85 px-3 py-2 shadow-sm shadow-stone-950/5"
+  end
+
+  def manual_food_badge_classes
+    "inline-flex shrink-0 items-center rounded-full bg-orange-100 px-1.5 py-0.5 text-[10px] font-semibold text-orange-900"
+  end
+
   def sort_toggle_classes(active)
     if active
       "inline-flex min-h-10 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-orange-700 px-4 text-sm font-semibold text-orange-50 shadow-[0_12px_24px_rgba(154,52,18,0.22)]"

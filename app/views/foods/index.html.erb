@@ -1,11 +1,11 @@
 <% content_for :title, "食品一覧 | カロリー計算メモ帳" %>
 
-<main id="page-top" class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-10 pt-32 sm:px-6 sm:pt-36 lg:px-8">
-  <header class="fixed inset-x-0 top-0 z-40 border-b border-stone-200/80 bg-white/80 shadow-[0_14px_30px_rgba(54,31,18,0.08)] backdrop-blur-xl">
-    <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-      <%= link_to "CALORIE MEMO BOOK", root_path, class: "inline-flex min-h-11 items-center rounded-full bg-white/85 px-4 text-left font-display text-sm tracking-[0.18em] text-stone-950 transition duration-200 hover:-translate-y-0.5 hover:bg-white" %>
+<main id="page-top" class="<%= page_shell_classes %>">
+  <header class="<%= top_bar_classes %>">
+    <div class="<%= top_bar_inner_classes %>">
+      <%= link_to "CALORIE MEMO BOOK", root_path, class: brand_control_classes %>
 
-      <nav class="flex flex-wrap gap-2" aria-label="画面切替">
+      <nav class="<%= nav_group_classes %>" aria-label="画面切替">
         <%= link_to "ダッシュボード", root_path, class: section_tab_classes %>
       </nav>
     </div>
@@ -13,8 +13,8 @@
 
   <section class="<%= panel_classes %>">
     <div class="flex flex-wrap items-center justify-between gap-3">
-      <h1 class="font-display text-2xl tracking-[0.12em] text-stone-950 sm:text-3xl">食品一覧</h1>
-      <nav class="flex flex-wrap gap-2" aria-label="並び順切替">
+      <h1 class="<%= page_title_classes %>">食品一覧</h1>
+      <nav class="<%= nav_group_classes %>" aria-label="並び順切替">
         <% { "count_desc" => "多い順", "count_asc" => "少ない順", "recent" => "最近順" }.each do |key, label| %>
           <%= link_to label, foods_path(sort: key), class: sort_toggle_classes(@sort == key) %>
         <% end %>
@@ -34,12 +34,12 @@
     <% else %>
       <ul class="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         <% @foods.each do |food| %>
-          <li class="flex items-center justify-between gap-3 rounded-xl border border-stone-200/80 bg-white/85 px-3 py-2 shadow-sm shadow-stone-950/5">
+          <li class="<%= food_list_item_classes %>">
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-1.5">
                 <span class="truncate text-sm font-semibold text-stone-950"><%= food.name %></span>
                 <% if food.manual_calories_enabled? %>
-                  <span class="inline-flex shrink-0 items-center rounded-full bg-orange-100 px-1.5 py-0.5 text-[10px] font-semibold text-orange-900">手動</span>
+                  <span class="<%= manual_food_badge_classes %>">手動</span>
                 <% end %>
               </div>
               <p class="mt-0.5 text-xs text-stone-500">
