@@ -49,7 +49,7 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
     assert_match "外食", @response.body
     assert_match 'name="daily_food_log[calories]"', @response.body
     assert_match 'data-controller="manual-calorie-form"', @response.body
-    assert_match 'turbo:submit-end-&gt;manual-calorie-form#submitEnd', @response.body
+    assert_match "turbo:submit-end-&gt;manual-calorie-form#submitEnd", @response.body
   end
 
   test "should show manual calorie form for snack sweets" do
