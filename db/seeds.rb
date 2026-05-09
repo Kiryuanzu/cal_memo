@@ -21,7 +21,7 @@ foods_by_category = {
     { name: "ご飯150g", calories: 234, protein_g: 4, manual_calories_enabled: false },
     { name: "味噌汁", calories: 40, protein_g: 3, manual_calories_enabled: false },
     { name: "豆腐入り味噌汁", calories: 70, protein_g: 6, manual_calories_enabled: false },
-    { name: "noshのお弁当", calories: 350, protein_g: 25, manual_calories_enabled: false },
+    { name: "noshのお弁当", calories: 350, protein_g: 25, manual_calories_enabled: true },
     { name: "うどん", calories: 230, protein_g: 7, manual_calories_enabled: false },
     { name: "そば", calories: 320, protein_g: 11, manual_calories_enabled: false },
     { name: "ミートソース", calories: 500, protein_g: 20, manual_calories_enabled: false },
@@ -47,7 +47,10 @@ foods_by_category = {
     { name: "トマトと卵炒め", calories: 100, protein_g: 7, manual_calories_enabled: false },
     { name: "無脂肪ヨーグルト", calories: 25, protein_g: 3, manual_calories_enabled: false },
     { name: "納豆", calories: 90, protein_g: 8, manual_calories_enabled: false },
-    { name: "いちご（2粒）", calories: 12, protein_g: 0, manual_calories_enabled: false }
+    { name: "いちご（2粒）", calories: 12, protein_g: 0, manual_calories_enabled: false },
+    { name: "アジフライ（小さめ1尾）", calories: 250, protein_g: 12 },
+    { name: "千切りキャベツ", calories: 15, protein_g: 1 },
+    { name: "青椒肉絲", calories: 300, protein_g: 15 }
   ],
   snack: [
     { name: "ミックスナッツ(少量)", calories: 15, protein_g: 1, manual_calories_enabled: false },
