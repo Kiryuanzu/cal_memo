@@ -26,8 +26,12 @@ bin/rails test test/controllers/daily_food_logs_controller_test.rb
 bin/rails db:seed
 
 # Lint
-bundle exec rubocop
+bin/rubocop
 ```
+
+## Code Quality
+
+- コードを修正したら、必ず `bin/rubocop` を実行して違反がないことを確認する。
 
 ## Architecture
 
@@ -38,16 +42,16 @@ bundle exec rubocop
 
 **重要な制約**: `meal_type` と Food の `category` の対応関係が固定されており (`Food::CATEGORY_FOR_MEAL_TYPE`)、朝食には `breakfast` カテゴリ、昼・夜食には `lunch_dinner` カテゴリ、間食には `snack` カテゴリの Food のみ登録できる。
 
-### Controller
+### Controllers
 
-`DailyFoodLogsController` のみ (root パス)。全アクション (`index`, `create`, `destroy`) で Turbo Stream レスポンスに対応。`load_dashboard` メソッドが `@meal_sections`, `@period_totals`, `@summary_rows` などダッシュボード表示に必要な全データを組み立てる。
-
-create/destroy 成功後は `render_dashboard_updates` で `#flash` と `#dashboard` の2箇所を Turbo Stream で部分更新する。
+- **`DailyFoodLogsController`** (root パス) — `index`, `create`, `update`, `destroy`。全アクションで Turbo Stream レスポンスに対応。`load_dashboard` メソッドが `@meal_sections`, `@period_totals`, `@summary_rows` などダッシュボード表示に必要な全データを組み立てる。create/destroy 成功後は `render_dashboard_updates` で `#flash` と `#dashboard` の2箇所を Turbo Stream で部分更新する。
+- **`FoodsController#index`** (`/foods`) — Food マスタの一覧。`sort` パラメータ (`count_desc` / `count_asc` / `recent`) と `category` パラメータで並び替え・絞り込み。ソートは Arel ではなく Ruby 側で `sort_by` する方針 (commit 3679a4d)。
 
 ### View構成
 
 - `daily_food_logs/index.html.erb` — ページ全体のレイアウトと日付ナビゲーション
 - `daily_food_logs/_dashboard.html.erb` — Turbo Stream で置き換えられる `id="dashboard"` の部分テンプレート。食事セクション・カロリーサマリーを含む
+- `foods/index.html.erb` — `/foods` 一覧ページ
 
 ### Stimulus Controllers
 
