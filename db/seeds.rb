@@ -24,7 +24,7 @@ foods_by_category = {
     { name: "ゆで卵", calories: 80, protein_g: 6, manual_calories_enabled: false },
     { name: "noshのお弁当", calories: 350, protein_g: 25, manual_calories_enabled: true },
     { name: "うどん", calories: 230, protein_g: 7, manual_calories_enabled: false },
-    { name: "そば", calories: 320, protein_g: 11, manual_calories_enabled: false },
+    { name: "そば（乾麺60g）", calories: 210, protein_g: 8, manual_calories_enabled: false },
     { name: "ミートソース", calories: 500, protein_g: 20, manual_calories_enabled: false },
     { name: "豚肉と玉ねぎ煮込み", calories: 200, protein_g: 15, manual_calories_enabled: false },
     { name: "鶏・豚の酒蒸し", calories: 200, protein_g: 25, manual_calories_enabled: false },
@@ -59,7 +59,8 @@ foods_by_category = {
     { name: "チーズ", calories: 60, protein_g: 4, manual_calories_enabled: false },
     { name: "ゆで卵", calories: 80, protein_g: 6, manual_calories_enabled: false },
     { name: "和菓子", calories: 200, protein_g: 4, manual_calories_enabled: true },
-    { name: "洋菓子", calories: 300, protein_g: 4, manual_calories_enabled: true }
+    { name: "洋菓子", calories: 300, protein_g: 4, manual_calories_enabled: true },
+    { name: "氷菓子", calories: 100, protein_g: 0, manual_calories_enabled: true }
   ]
 }
 
