@@ -6,9 +6,20 @@ class Food < ApplicationRecord
     "snack" => "snack"
   }.freeze
 
+  FOOD_GROUPS = {
+    staple: 0,
+    main: 1,
+    side: 2,
+    fruit: 3,
+    dairy: 4,
+    drink: 5,
+    sweet: 6
+  }.freeze
+
   has_many :daily_food_logs, dependent: :restrict_with_exception
 
   enum :category, { breakfast: 0, lunch_dinner: 1, snack: 2 }, validate: true
+  enum :food_group, FOOD_GROUPS, validate: true
 
   validates :name, presence: true, uniqueness: { scope: :category }
   validates :calories, presence: true,

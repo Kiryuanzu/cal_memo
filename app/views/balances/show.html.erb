@@ -1,0 +1,74 @@
+<% content_for :title, "食生活バランス | カロリー計算メモ帳" %>
+
+<main id="page-top" class="<%= page_shell_classes %>">
+  <header class="<%= top_bar_classes %>">
+    <div class="<%= top_bar_inner_classes %>">
+      <%= link_to "CALORIE MEMO BOOK", root_path, class: brand_control_classes %>
+
+      <nav class="<%= nav_group_classes %>" aria-label="画面切替">
+        <%= link_to "ダッシュボード", root_path, class: section_tab_classes %>
+        <%= link_to "食品一覧", foods_path, class: section_tab_classes %>
+      </nav>
+    </div>
+  </header>
+
+  <section class="<%= panel_classes %>">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h1 class="<%= page_title_classes %>">食生活バランス</h1>
+        <p class="<%= section_description_classes %>">グループ別の登場日数で食生活の偏りを確認できます。</p>
+      </div>
+      <nav class="<%= nav_group_classes %>" aria-label="期間切替">
+        <% BalancesController::ALLOWED_RANGE_DAYS.each do |days| %>
+          <%= link_to "#{days}日", balance_path(range: days), class: balance_range_tab_classes(@range_days == days) %>
+        <% end %>
+      </nav>
+    </div>
+
+    <% if @group_counts.empty? %>
+      <div class="<%= empty_state_classes %>">この期間の記録はまだありません。</div>
+    <% else %>
+      <ul class="mt-6 grid gap-3">
+        <% BalancesController::GROUP_LABELS.each do |group, label| %>
+          <% count = @group_counts.fetch(group, 0) %>
+          <li class="grid grid-cols-[4rem_1fr_4.5rem] items-center gap-3">
+            <span class="text-sm font-semibold text-stone-700"><%= label %></span>
+            <div class="<%= balance_bar_track_classes %>">
+              <div class="<%= balance_bar_fill_classes %>" style="width: <%= balance_bar_percent(count, @range_days) %>%"></div>
+            </div>
+            <span class="text-right text-xs text-stone-500"><%= count %>/<%= @range_days %>日</span>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </section>
+
+  <section class="<%= panel_classes %>">
+    <div>
+      <h2 class="<%= section_title_classes %>">最近食べていない食材</h2>
+      <p class="<%= section_description_classes %>"><%= BalancesController::STALE_THRESHOLD_DAYS %>日以上記録のない食材です。</p>
+    </div>
+
+    <% if @stale_foods_by_group.empty? %>
+      <div class="<%= empty_state_classes %>">該当なし。最近いろいろな食材を食べています。</div>
+    <% else %>
+      <div class="mt-6 grid gap-5">
+        <% BalancesController::GROUP_LABELS.each do |group, label| %>
+          <% items = @stale_foods_by_group.fetch(group, []) %>
+          <% next if items.empty? %>
+          <div>
+            <p class="text-sm font-semibold text-stone-700"><%= label %></p>
+            <ul class="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              <% items.each do |item| %>
+                <li class="flex items-center justify-between gap-3 rounded-xl border border-stone-200/80 bg-white/85 px-3 py-2 shadow-sm shadow-stone-950/5">
+                  <span class="truncate text-sm font-semibold text-stone-950"><%= item[:food].name %></span>
+                  <span class="shrink-0 text-xs text-stone-500"><%= item[:days_ago] %>日前</span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+</main>

@@ -6,6 +6,7 @@ today_breakfast:
   calories: 220
   eaten_on: 2026-04-01
   meal_type: breakfast
+  food_group: staple
 
 today_lunch:
   food: lunch_curry
@@ -13,6 +14,7 @@ today_lunch:
   calories: 840
   eaten_on: 2026-04-01
   meal_type: lunch
+  food_group: main
 
 yesterday_snack:
   food: snack_latte
@@ -20,3 +22,4 @@ yesterday_snack:
   calories: 130
   eaten_on: 2026-03-31
   meal_type: snack
+  food_group: drink

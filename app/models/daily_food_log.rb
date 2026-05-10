@@ -9,6 +9,7 @@ class DailyFoodLog < ApplicationRecord
   belongs_to :food
 
   enum :meal_type, { breakfast: 0, lunch: 1, dinner: 2, snack: 3 }, validate: true
+  enum :food_group, Food::FOOD_GROUPS, validate: true
 
   before_validation :copy_food_snapshot
 
@@ -82,6 +83,7 @@ class DailyFoodLog < ApplicationRecord
       self.food_name = food.name
       self.calories = food.manual_calories_enabled? ? calories.presence : food.calories
       self.protein_g = food.protein_g
+      self.food_group = food.food_group
     end
 
     def food_category_matches_meal_type

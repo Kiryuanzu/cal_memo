@@ -10,6 +10,19 @@ class DailyFoodLogTest < ActiveSupport::TestCase
 
     assert_equal "バナナ", log.food_name
     assert_equal 86, log.calories
+    assert_equal "fruit", log.food_group
+  end
+
+  test "preserves food_group snapshot after food update" do
+    food = foods(:breakfast_banana)
+    log = DailyFoodLog.create!(
+      food: food,
+      meal_type: :breakfast,
+      eaten_on: Date.new(2026, 4, 1)
+    )
+    food.update!(food_group: :main)
+
+    assert_equal "fruit", log.reload.food_group
   end
 
   test "is invalid when meal type does not match food category" do

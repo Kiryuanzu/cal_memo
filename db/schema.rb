@@ -10,17 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_29_133849) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_10_141050) do
   create_table "daily_food_logs", force: :cascade do |t|
     t.integer "calories", null: false
     t.text "comment"
     t.datetime "created_at", null: false
     t.date "eaten_on", null: false
+    t.integer "food_group", default: 0, null: false
     t.integer "food_id", null: false
     t.string "food_name", null: false
     t.integer "meal_type", null: false
     t.integer "protein_g", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.index ["eaten_on", "food_group"], name: "index_daily_food_logs_on_eaten_on_and_food_group"
     t.index ["eaten_on", "meal_type"], name: "index_daily_food_logs_on_eaten_on_and_meal_type"
     t.index ["eaten_on"], name: "index_daily_food_logs_on_eaten_on"
     t.index ["food_id"], name: "index_daily_food_logs_on_food_id"
@@ -30,6 +32,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_133849) do
     t.integer "calories", null: false
     t.integer "category", null: false
     t.datetime "created_at", null: false
+    t.integer "food_group", default: 0, null: false
     t.boolean "manual_calories_enabled", default: false, null: false
     t.string "name", null: false
     t.integer "protein_g", default: 0, null: false
