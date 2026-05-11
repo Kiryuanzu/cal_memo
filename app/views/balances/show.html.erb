@@ -18,6 +18,7 @@
         <h1 class="<%= page_title_classes %>">食生活バランス</h1>
         <p class="<%= section_description_classes %>">グループ別の登場日数で食生活の偏りを確認できます。</p>
       </div>
+
       <nav class="<%= nav_group_classes %>" aria-label="期間切替">
         <% BalancesController::ALLOWED_RANGE_DAYS.each do |days| %>
           <%= link_to "#{days}日", balance_path(range: days), class: balance_range_tab_classes(@range_days == days) %>
@@ -31,11 +32,17 @@
       <ul class="mt-6 grid gap-3">
         <% BalancesController::GROUP_LABELS.each do |group, label| %>
           <% count = @group_counts.fetch(group, 0) %>
+
           <li class="grid grid-cols-[4rem_1fr_4.5rem] items-center gap-3">
             <span class="text-sm font-semibold text-stone-700"><%= label %></span>
+
             <div class="<%= balance_bar_track_classes %>">
-              <div class="<%= balance_bar_fill_classes %>" style="width: <%= balance_bar_percent(count, @range_days) %>%"></div>
+              <div
+                class="<%= balance_bar_fill_classes %>"
+                style="width: <%= balance_bar_percent(count, @range_days) %>%"
+              ></div>
             </div>
+
             <span class="text-right text-xs text-stone-500"><%= count %>/<%= @range_days %>日</span>
           </li>
         <% end %>
@@ -56,11 +63,18 @@
         <% BalancesController::GROUP_LABELS.each do |group, label| %>
           <% items = @stale_foods_by_group.fetch(group, []) %>
           <% next if items.empty? %>
+
           <div>
             <p class="text-sm font-semibold text-stone-700"><%= label %></p>
+
             <ul class="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               <% items.each do |item| %>
-                <li class="flex items-center justify-between gap-3 rounded-xl border border-stone-200/80 bg-white/85 px-3 py-2 shadow-sm shadow-stone-950/5">
+                <li
+                  class="
+                    flex items-center justify-between gap-3 rounded-xl border border-stone-200/80 bg-white/85 px-3
+                    py-2 shadow-sm shadow-stone-950/5
+                  "
+                >
                   <span class="truncate text-sm font-semibold text-stone-950"><%= item[:food].name %></span>
                   <span class="shrink-0 text-xs text-stone-500"><%= item[:days_ago] %>日前</span>
                 </li>
