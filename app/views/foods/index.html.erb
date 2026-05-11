@@ -48,7 +48,7 @@
                 · <%= number_with_delimiter(food.calories) %> kcal
                 · P <%= food.protein_g %> g
                 <% if (last = @last_eaten_on[food.id]) %>
-                  · <%= last.month %>/<%= last.day %>
+                  · <%= last.strftime("%-m/%-d") %>
                 <% end %>
               </p>
             </div>

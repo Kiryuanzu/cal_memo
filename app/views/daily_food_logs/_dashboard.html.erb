@@ -134,7 +134,7 @@
     <% if @selected_tab == "day" %>
       <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-sm font-semibold text-stone-700">
-          <%= @selected_date.beginning_of_week.month %>/<%= @selected_date.beginning_of_week.day %> - <%= @selected_date.end_of_week.month %>/<%= @selected_date.end_of_week.day %> の週
+          <%= @selected_date.beginning_of_week.strftime("%-m/%-d") %> - <%= @selected_date.end_of_week.strftime("%-m/%-d") %> の週
         </p>
         <div class="grid grid-cols-2 gap-2 sm:flex sm:gap-2">
           <%= link_to "前の週", root_path(date: (@selected_date - 7.days).iso8601, tab: @selected_tab), class: subtle_button_classes %>
@@ -307,7 +307,7 @@
 
       <div data-controller="copy">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <h3 class="font-semibold text-stone-900">1週間分（<%= @selected_date.beginning_of_week.month %>/<%= @selected_date.beginning_of_week.day %> - <%= @selected_date.end_of_week.month %>/<%= @selected_date.end_of_week.day %>）</h3>
+          <h3 class="font-semibold text-stone-900">1週間分（<%= @selected_date.beginning_of_week.strftime("%-m/%-d") %> - <%= @selected_date.end_of_week.strftime("%-m/%-d") %>）</h3>
           <button type="button" class="<%= primary_button_classes %>" data-action="copy#copy">コピー</button>
         </div>
         <textarea class="<%= textarea_classes %>" rows="9" readonly data-copy-target="source"><%= @weekly_summary_text %></textarea>
