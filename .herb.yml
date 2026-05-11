@@ -1,0 +1,8 @@
+formatter:
+  enabled: true
+  indentWidth: 2
+  maxLineLength: 120
+  exclude:
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "node_modules/**/*"

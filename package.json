@@ -1,0 +1,11 @@
+{
+  "name": "cal_memo",
+  "private": true,
+  "scripts": {
+    "format": "herb-format \"app/views/**/*.html.erb\"",
+    "format:check": "herb-format --check \"app/views/**/*.html.erb\""
+  },
+  "devDependencies": {
+    "@herb-tools/formatter": "^0.10.1"
+  }
+}

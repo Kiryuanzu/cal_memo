@@ -25,13 +25,18 @@ bin/rails test test/controllers/daily_food_logs_controller_test.rb
 # DBシード（食品マスタ登録）
 bin/rails db:seed
 
-# Lint
+# Lint (Ruby)
 bin/rubocop
+
+# Lint / Format (HTML+ERB)
+npm run format        # 整形を適用
+npm run format:check  # 整形ズレを検出 (CI と同じチェック)
 ```
 
 ## Code Quality
 
-- コードを修正したら、必ず `bin/rubocop` を実行して違反がないことを確認する。
+- Ruby コードを修正したら、必ず `bin/rubocop` を実行して違反がないことを確認する。
+- `.html.erb` を編集したら `npm run format` を実行する。CI の `lint_erb` ジョブで `herb-format --check` が走る。
 
 ## Architecture
 
