@@ -108,6 +108,12 @@ module DashboardHelper
     [ (current.to_f / target * 100).round, 100 ].min
   end
 
+  def weekly_target_range_text
+    lower = number_with_delimiter(WEEKLY_TARGET_LOWER)
+    upper = number_with_delimiter(WEEKLY_TARGET_UPPER)
+    "週の総摂取カロリー目安: 約#{lower}〜#{upper} kcal"
+  end
+
   def calorie_tone_classes(calories)
     case calories
     when 2501.. then "border-rose-300/80 bg-rose-50/90 text-rose-950"

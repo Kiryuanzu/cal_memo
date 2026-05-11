@@ -56,7 +56,7 @@
             <div class="<%= progress_track_classes %>">
               <div class="<%= progress_bar_classes %>" style="width: <%= progress_percent(@period_totals[:week], DashboardHelper::WEEKLY_TARGET_LOWER) %>%"></div>
             </div>
-            <p class="<%= supporting_text_classes %>">週の総摂取カロリー目安: 約<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_LOWER) %>〜<%= number_with_delimiter(DashboardHelper::WEEKLY_TARGET_UPPER) %> kcal</p>
+            <p class="<%= supporting_text_classes %>"><%= weekly_target_range_text %></p>
           </div>
         </section>
         <div class="grid gap-4">
