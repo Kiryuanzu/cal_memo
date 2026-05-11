@@ -50,8 +50,7 @@
                 <%= FoodsController::CATEGORY_LABELS.fetch(food.category, food.category) %> ·
                 <%= number_with_delimiter(food.calories) %> kcal · P <%= food.protein_g %> g
                 <% if (last = @last_eaten_on[food.id]) %>
-                  ·
-                  <%= last.strftime("%-m/%-d") %>
+                  <span>· <%= last.strftime("%-m/%-d") %></span>
                 <% end %>
               </p>
             </div>
