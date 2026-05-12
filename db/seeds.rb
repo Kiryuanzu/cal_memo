@@ -31,6 +31,7 @@ foods_by_category = {
     { name: "鶏もも肉チャーシュー（皮なし100g）", calories: 200, protein_g: 20, food_group: :main },
     { name: "鶏ささみ（2本）", calories: 100, protein_g: 22, food_group: :main, manual_calories_enabled: false },
     { name: "サラダチキン（3切れ）", calories: 60, protein_g: 12, food_group: :main, manual_calories_enabled: false },
+    { name: "タンドリーチキン（鶏むね100g）", calories: 180, protein_g: 22, food_group: :main, manual_calories_enabled: false },
     { name: "鶏のさっぱり煮（手羽元1本）", calories: 220, protein_g: 10, food_group: :main, manual_calories_enabled: false },
     { name: "親子丼", calories: 400, protein_g: 20, food_group: :main, manual_calories_enabled: false },
     { name: "カレー", calories: 300, protein_g: 10, food_group: :main, manual_calories_enabled: false },
