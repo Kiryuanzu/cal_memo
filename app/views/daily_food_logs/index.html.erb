@@ -1,5 +1,14 @@
 <% content_for :title, "カロリー計算メモ帳" %>
 
 <%= turbo_frame_tag "dashboard", class: "block" do %>
-  <%= render "dashboard" %>
+  <%= render "dashboard",
+    selected_date: @selected_date,
+    selected_tab: @selected_tab,
+    daily_food_log: @daily_food_log,
+    meal_sections: @meal_sections,
+    period_totals: @period_totals,
+    protein_summary: @protein_summary,
+    summary_rows: @summary_rows,
+    daily_summary_text: @daily_summary_text,
+    weekly_summary_text: @weekly_summary_text %>
 <% end %>

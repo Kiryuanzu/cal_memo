@@ -238,7 +238,21 @@ class DailyFoodLogsController < ApplicationController
     def render_dashboard_updates(status: :ok)
       render turbo_stream: [
         turbo_stream.replace("flash", partial: "shared/flash"),
-        turbo_stream.update("dashboard", partial: "daily_food_logs/dashboard")
+        turbo_stream.update("dashboard", partial: "daily_food_logs/dashboard", locals: dashboard_locals)
       ], status: status
+    end
+
+    def dashboard_locals
+      {
+        selected_date: @selected_date,
+        selected_tab: @selected_tab,
+        daily_food_log: @daily_food_log,
+        meal_sections: @meal_sections,
+        period_totals: @period_totals,
+        protein_summary: @protein_summary,
+        summary_rows: @summary_rows,
+        daily_summary_text: @daily_summary_text,
+        weekly_summary_text: @weekly_summary_text
+      }
     end
 end
