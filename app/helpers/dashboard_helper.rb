@@ -114,6 +114,14 @@ module DashboardHelper
     "週の総摂取カロリー目安: 約#{lower}〜#{upper} kcal"
   end
 
+  def protein_status_text(deficit)
+    if deficit.positive?
+      "不足: #{deficit} g"
+    else
+      "達成済み（+#{-deficit} g）"
+    end
+  end
+
   def calorie_tone_classes(calories)
     case calories
     when 2501.. then "border-rose-300/80 bg-rose-50/90 text-rose-950"

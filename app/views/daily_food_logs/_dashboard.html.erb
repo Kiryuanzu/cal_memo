@@ -236,13 +236,7 @@
           1日平均: <%= @protein_summary[:week_average] %> g（目標 <%= @protein_summary[:daily_target] %> g/日）
         </p>
 
-        <p class="text-sm text-stone-500">
-          <% if @protein_summary[:deficit].positive? %>
-            <span>不足: <%= @protein_summary[:deficit] %> g</span>
-          <% else %>
-            <span>達成済み（+<%= -@protein_summary[:deficit] %> g）</span>
-          <% end %>
-        </p>
+        <p class="text-sm text-stone-500"><%= protein_status_text(@protein_summary[:deficit]) %></p>
       </article>
     <% end %>
 
