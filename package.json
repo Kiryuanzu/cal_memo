@@ -3,9 +3,13 @@
   "private": true,
   "scripts": {
     "format": "herb-format \"app/views/**/*.html.erb\"",
-    "format:check": "herb-format --check \"app/views/**/*.html.erb\""
+    "format:check": "herb-format --check \"app/views/**/*.html.erb\"",
+    "lint": "herb-lint \"app/views/**/*.html.erb\"",
+    "lint:fix": "herb-lint --fix \"app/views/**/*.html.erb\"",
+    "check": "npm run format:check && npm run lint"
   },
   "devDependencies": {
-    "@herb-tools/formatter": "^0.10.1"
+    "@herb-tools/formatter": "^0.10.1",
+    "@herb-tools/linter": "^0.10.1"
   }
 }

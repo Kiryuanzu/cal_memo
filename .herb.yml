@@ -6,3 +6,11 @@ formatter:
     - "vendor/**/*"
     - "tmp/**/*"
     - "node_modules/**/*"
+
+linter:
+  enabled: true
+  failLevel: error
+  exclude:
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "node_modules/**/*"

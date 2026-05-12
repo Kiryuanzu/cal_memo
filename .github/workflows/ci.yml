@@ -83,6 +83,9 @@ jobs:
       - name: Check ERB formatting with herb-format
         run: npm run format:check
 
+      - name: Lint ERB with herb-lint
+        run: npx herb-lint --github "app/views/**/*.html.erb"
+
   test:
     runs-on: ubuntu-latest
 

@@ -31,12 +31,16 @@ bin/rubocop
 # Lint / Format (HTML+ERB)
 npm run format        # 整形を適用
 npm run format:check  # 整形ズレを検出 (CI と同じチェック)
+npm run lint          # ERB linter (herb-lint) を実行
+npm run lint:fix      # 自動修正可能な lint 違反を直す
+npm run check         # format:check + lint をまとめて実行
 ```
 
 ## Code Quality
 
 - Ruby コードを修正したら、必ず `bin/rubocop` を実行して違反がないことを確認する。
-- `.html.erb` を編集したら `npm run format` を実行する。CI の `lint_erb` ジョブで `herb-format --check` が走る。
+- `.html.erb` を編集したら `npm run format` + `npm run lint` を実行する (まとめて `npm run check`)。CI の `lint_erb` ジョブで両方走る。
+- パーシャル (`_xxx.html.erb`) ではインスタンス変数を使わず、`<%# locals: (...) %>` で受け取った locals 経由でアクセスする (herb-lint の `erb-no-instance-variables-in-partials` に従う)。
 
 ## Architecture
 
