@@ -76,7 +76,7 @@ class DailyFoodLog < ApplicationRecord
     "#{base}[#{log.comment.gsub(/\s+/, ' ').strip}]"
   end
 
-  def halve_calories!
+  def half_calories!
     update!(calories: [ (calories / 2.0).round, 1 ].max)
   end
 

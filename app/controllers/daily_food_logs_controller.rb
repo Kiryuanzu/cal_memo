@@ -1,7 +1,7 @@
 class DailyFoodLogsController < ApplicationController
   before_action :set_selected_date
   before_action :set_selected_tab
-  before_action :set_daily_food_log, only: [ :update, :destroy, :halve_calories ]
+  before_action :set_daily_food_log, only: [ :update, :destroy, :half_calories ]
 
   def index
     load_dashboard
@@ -56,8 +56,8 @@ class DailyFoodLogsController < ApplicationController
     end
   end
 
-  def halve_calories
-    @daily_food_log.halve_calories!
+  def half_calories
+    @daily_food_log.half_calories!
     load_dashboard
 
     respond_to do |format|

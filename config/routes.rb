@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "daily_food_logs#index"
   resources :daily_food_logs, only: [ :index, :create, :update, :destroy ] do
-    patch :halve_calories, on: :member
+    patch :half_calories, on: :member
   end
   resources :foods, only: [ :index ]
   resource :balance, only: :show

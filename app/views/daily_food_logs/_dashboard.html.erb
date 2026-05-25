@@ -381,7 +381,7 @@
                       <%= number_with_delimiter(log.calories) %> kcal
                     </p>
 
-                    <%= button_to "1/2", halve_calories_daily_food_log_path(log, date: selected_date.iso8601, tab: selected_tab), method: :patch, class: "inline-flex min-h-8 items-center justify-center rounded-full border border-stone-200/80 bg-white/70 px-3 text-xs font-semibold text-stone-500 transition hover:border-orange-200 hover:bg-orange-50 hover:text-orange-900", form: { data: { turbo_confirm: "カロリーを1/2にしますか？" } } %>
+                    <%= button_to "1/2", half_calories_daily_food_log_path(log, date: selected_date.iso8601, tab: selected_tab), method: :patch, class: "inline-flex min-h-8 items-center justify-center rounded-full border border-stone-200/80 bg-white/70 px-3 text-xs font-semibold text-stone-500 transition hover:border-orange-200 hover:bg-orange-50 hover:text-orange-900", form: { data: { turbo_confirm: "カロリーを1/2にしますか？" } } %>
                     <%= button_to "削除", daily_food_log_path(log, date: selected_date.iso8601, tab: selected_tab), method: :delete, class: danger_button_classes, form: { data: { turbo_confirm: "この記録を削除しますか？" } } %>
                   </div>
                 </div>

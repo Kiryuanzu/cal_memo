@@ -186,15 +186,15 @@ class DailyFoodLogsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url(date: "2026-04-01", tab: "day")
   end
 
-  test "should halve daily food log calories" do
-    patch halve_calories_daily_food_log_url(@daily_food_log), params: { date: "2026-04-01", tab: "day" }
+  test "should half daily food log calories" do
+    patch half_calories_daily_food_log_url(@daily_food_log), params: { date: "2026-04-01", tab: "day" }
 
     assert_equal 110, @daily_food_log.reload.calories
     assert_redirected_to root_url(date: "2026-04-01", tab: "day")
   end
 
-  test "should halve daily food log calories with turbo stream" do
-    patch halve_calories_daily_food_log_url(@daily_food_log),
+  test "should half daily food log calories with turbo stream" do
+    patch half_calories_daily_food_log_url(@daily_food_log),
       params: { date: "2026-04-01", tab: "day" },
       as: :turbo_stream
 
