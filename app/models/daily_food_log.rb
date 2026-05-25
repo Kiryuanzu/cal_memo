@@ -11,7 +11,7 @@ class DailyFoodLog < ApplicationRecord
   enum :meal_type, { breakfast: 0, lunch: 1, dinner: 2, snack: 3 }, validate: true
   enum :food_group, Food::FOOD_GROUPS, validate: true
 
-  before_validation :copy_food_snapshot
+  before_validation :copy_food_snapshot, on: :create
 
   validates :eaten_on, presence: true
   validates :food_name, presence: true
@@ -74,6 +74,10 @@ class DailyFoodLog < ApplicationRecord
     return base if log.comment.blank?
 
     "#{base}[#{log.comment.gsub(/\s+/, ' ').strip}]"
+  end
+
+  def halve_calories!
+    update!(calories: [ (calories / 2.0).round, 1 ].max)
   end
 
   private
