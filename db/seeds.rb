@@ -58,8 +58,10 @@ foods_by_category = {
     { name: "ミックスナッツ(少量)", calories: 15, protein_g: 1, food_group: :main, manual_calories_enabled: false },
     { name: "チーズ", calories: 60, protein_g: 4, food_group: :dairy, manual_calories_enabled: false },
     { name: "ゆで卵", calories: 80, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "みかん", calories: 35, protein_g: 0, food_group: :fruit, manual_calories_enabled: false },
     { name: "和菓子", calories: 200, protein_g: 4, food_group: :sweet, manual_calories_enabled: true },
     { name: "洋菓子", calories: 300, protein_g: 4, food_group: :sweet, manual_calories_enabled: true },
+    { name: "飲み物", calories: 100, protein_g: 0, food_group: :drink, manual_calories_enabled: true },
     { name: "氷菓子", calories: 100, protein_g: 0, food_group: :sweet, manual_calories_enabled: true }
   ]
 }
