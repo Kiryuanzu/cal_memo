@@ -1,0 +1,23 @@
+en:
+  activerecord:
+    attributes:
+      daily_training_log:
+        training_exercise: 筋トレ種目
+        trained_on: 日付
+        sets: セット数
+        reps: 回数
+        weight_kg: 重量
+        duration_seconds: 時間
+    errors:
+      models:
+        daily_training_log:
+          attributes:
+            training_exercise:
+              required: を選択してください
+            trained_on:
+              blank: に有効な日付を入力してください
+          blank: を入力してください
+          not_a_number: は数値で入力してください
+          not_an_integer: は整数で入力してください
+          greater_than: は%{count}より大きい値で入力してください
+          greater_than_or_equal_to: は%{count}以上で入力してください

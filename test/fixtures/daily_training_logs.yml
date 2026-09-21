@@ -1,0 +1,15 @@
+squat:
+  training_exercise: squat
+  trained_on: 2026-09-19
+  sets: 3
+  reps: 10
+
+plank:
+  training_exercise: plank
+  trained_on: 2026-09-19
+  sets: 3
+  duration_seconds: 30
+
+previous_day:
+  training_exercise: gym_shoulder
+  trained_on: 2026-09-18

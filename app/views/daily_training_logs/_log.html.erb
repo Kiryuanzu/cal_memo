@@ -1,0 +1,33 @@
+<%# locals: (log:, selected_tab:, expanded: false) %>
+
+<%= tag.details id: dom_id(log), class: "scroll-mt-40", open: expanded || log.errors.any? do %>
+  <summary class="cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-orange-500">
+    <span class="text-sm font-semibold text-orange-900">
+      <%= log.training_exercise.body_part_label %> · <%= log.training_exercise.training_type_label %>
+    </span>
+
+    <h3 class="mt-2 text-lg font-bold text-stone-950"><%= log.training_exercise.name %></h3>
+    <span class="mt-2 block text-sm text-stone-600"><%= training_log_details(log) %></span>
+    <span class="mt-2 block text-xs text-stone-500">詳細を入力・編集</span>
+  </summary>
+
+  <% if log.errors.any? %>
+    <div class="mt-4 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900" role="alert">
+      <p class="font-semibold">入力内容を確認してください。</p>
+
+      <ul class="mt-2 list-inside list-disc">
+        <% log.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with model: log, url: daily_training_log_path(log, tab: selected_tab), namespace: dom_id(log), class: "mt-4 grid gap-4 sm:grid-cols-2" do |form| %>
+    <%= render "detail_fields", form: form %>
+
+    <div class="sm:col-span-2">
+      <%= form.submit "詳細を保存", class: primary_button_classes %>
+    </div>
+  <% end %>
+<% end %>

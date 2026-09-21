@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     patch :half_calories, on: :member
   end
   resources :foods, only: [ :index ]
+  resources :daily_training_logs, only: [ :index, :create, :update ]
   resource :balance, only: :show
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

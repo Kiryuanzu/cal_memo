@@ -1,0 +1,21 @@
+<%# locals: (form:) %>
+
+<div>
+  <%= form.label :sets, "セット数", class: form_label_classes %>
+  <%= form.number_field :sets, min: 1, step: 1, inputmode: "numeric", class: input_classes %>
+</div>
+
+<div>
+  <%= form.label :reps, "回数（1セットあたり）", class: form_label_classes %>
+  <%= form.number_field :reps, min: 1, step: 1, inputmode: "numeric", class: input_classes %>
+</div>
+
+<div>
+  <%= form.label :weight_kg, "重量（kg）", class: form_label_classes %>
+  <%= form.number_field :weight_kg, min: 0, step: "0.01", inputmode: "decimal", class: input_classes %>
+</div>
+
+<div>
+  <%= form.label :duration_seconds, "時間（秒・1セットあたり）", class: form_label_classes %>
+  <%= form.number_field :duration_seconds, min: 1, step: 1, inputmode: "numeric", class: input_classes %>
+</div>

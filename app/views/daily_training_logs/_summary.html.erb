@@ -1,0 +1,131 @@
+<%# locals: (selected_date:, selected_tab:, range:, body_parts_by_date:, body_part_days:, comparison_parts_by_date:, training_types_by_date:) %>
+
+<section id="training-summary" class="<%= panel_classes %> scroll-mt-40">
+  <h2 class="<%= section_title_classes %>">部位別の集計</h2>
+
+  <p class="<%= section_description_classes %>">同じ日に同じ部位を複数回鍛えても、実施日数は1日として数えます。</p>
+
+  <nav class="mt-6 grid grid-cols-3 gap-2" aria-label="筋トレ集計の期間切替">
+    <% { "day" => "日", "week" => "週", "month" => "月" }.each do |key, label| %>
+      <%= link_to label, daily_training_logs_path(date: selected_date.iso8601, tab: key, anchor: "training-summary"), class: period_tab_classes((selected_tab || "day") == key), aria: { current: ((selected_tab || "day") == key ? "page" : nil) } %>
+    <% end %>
+  </nav>
+
+  <h3 class="mt-5 text-lg font-bold text-stone-950"><%= training_period_label(range, selected_tab) %></h3>
+
+  <% period_name = { "week" => "週", "month" => "月" }.fetch(selected_tab, "日") %>
+
+  <nav class="mt-3 flex flex-wrap gap-2" aria-label="筋トレ集計の期間移動">
+    <%= link_to "前の#{period_name}", daily_training_logs_path(date: training_period_date(selected_date, selected_tab, -1).iso8601, tab: selected_tab, anchor: "training-summary"), class: subtle_button_classes %>
+    <%= link_to "次の#{period_name}", daily_training_logs_path(date: training_period_date(selected_date, selected_tab, 1).iso8601, tab: selected_tab, anchor: "training-summary"), class: subtle_button_classes %>
+  </nav>
+
+  <p id="training-days" class="mt-5 text-lg font-bold text-orange-900">
+    筋トレ実施 <%= body_parts_by_date.size %> / <%= range.count %>日
+  </p>
+
+  <dl class="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <% TrainingExercise::BODY_PART_LABELS.each do |body_part, label| %>
+      <div id="training-days-<%= body_part %>" class="<%= compact_card_classes %>">
+        <dt class="<%= metric_label_classes %>"><%= label %></dt>
+        <dd class="<%= metric_value_classes %>"><%= body_part_days.fetch(body_part, 0) %>日</dd>
+      </div>
+    <% end %>
+  </dl>
+
+  <div id="previous-training" class="mt-6 rounded-2xl border border-stone-200 bg-white/80 p-4">
+    <h4 class="font-bold text-stone-950">前日との比較</h4>
+
+    <p class="mt-2 text-sm text-stone-600">選択日の前日に鍛えた部位を表示します。家トレ・ジムそれぞれで同じ部位を2日連続で記録した場合に表示します。登録は制限しません。</p>
+
+    <% previous_parts = comparison_parts_by_date.fetch(selected_date - 1.day, []) %>
+    <% selected_parts = comparison_parts_by_date.fetch(selected_date, []) %>
+
+    <div class="mt-4 grid grid-cols-3 gap-2 text-center text-sm text-stone-600">
+      <span class="text-left">部位</span>
+      <span><%= (selected_date - 1.day).strftime("%-m/%-d") %>（前日）</span>
+      <span><%= selected_date.strftime("%-m/%-d") %>（選択日）</span>
+    </div>
+
+    <% TrainingExercise::BODY_PART_LABELS.each do |body_part, label| %>
+      <% consecutive_types = consecutive_training_types(training_types_by_date, selected_date, body_part) %>
+
+      <div
+        data-body-part="<%= body_part %>"
+        class="<%= class_names("mt-2 grid grid-cols-3 items-center gap-2 rounded-xl px-2 py-3 text-center text-sm", "bg-amber-50 text-amber-900": consecutive_types.any?) %>"
+      >
+        <span class="text-left font-semibold"><%= label %></span>
+
+        <span data-day="previous" aria-label="<%= previous_parts.include?(body_part) ? "記録あり" : "記録なし" %>">
+          <%= previous_parts.include?(body_part) ? "●" : "—" %>
+        </span>
+
+        <span data-day="selected">
+          <span aria-label="<%= selected_parts.include?(body_part) ? "記録あり" : "記録なし" %>">
+            <%= selected_parts.include?(body_part) ? "●" : "—" %>
+          </span>
+
+          <% consecutive_types.each do |training_type| %>
+            <span class="block text-xs font-semibold" data-training-type="<%= training_type %>">
+              <%= TrainingExercise::TRAINING_TYPE_LABELS.fetch(training_type) %> 2日連続
+            </span>
+          <% end %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if previous_parts.empty? %>
+      <p class="mt-3 text-sm text-stone-500">前日の筋トレ記録はありません。</p>
+    <% end %>
+  </div>
+
+  <div class="mt-6 overflow-x-auto">
+    <table class="w-full text-center text-sm">
+      <caption class="pb-3 text-left text-sm text-stone-600">
+        部位ごとの実施状況（●：記録あり、—：記録なし）。2日連続の部位は家トレ・ジム別に色と文字で表示します。日付を選ぶと、その日の記録を表示します。
+      </caption>
+
+      <thead class="border-b border-stone-200 text-xs text-stone-600 sm:text-sm">
+        <tr>
+          <th scope="col" class="px-2 py-3 text-left">日付</th>
+
+          <% TrainingExercise::BODY_PART_LABELS.each_value do |label| %>
+            <th scope="col" class="px-2 py-3"><%= label %></th>
+          <% end %>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% range.each do |date| %>
+          <% body_parts = body_parts_by_date.fetch(date, []) %>
+
+          <tr class="border-b border-stone-200/60" data-date="<%= date.iso8601 %>">
+            <th scope="row" class="text-left font-normal">
+              <%= link_to date.strftime("%-m/%-d"), daily_training_logs_path(date: date.iso8601, anchor: "daily-logs-section"), class: "inline-flex min-h-11 items-center px-2 font-semibold text-orange-900 underline underline-offset-4" %>
+            </th>
+
+            <% TrainingExercise::BODY_PART_LABELS.each_key do |body_part| %>
+              <% consecutive_types = consecutive_training_types(training_types_by_date, date, body_part) %>
+
+              <td
+                data-body-part="<%= body_part %>"
+                class="<%= class_names("px-2 py-3", "bg-amber-50": consecutive_types.any?) %>"
+              >
+                <% if body_parts.include?(body_part) %>
+                  <span class="font-bold text-orange-700" aria-label="記録あり">●</span>
+                  <% consecutive_types.each do |training_type| %>
+                    <span class="block text-xs font-semibold text-amber-900" data-training-type="<%= training_type %>">
+                      <%= TrainingExercise::TRAINING_TYPE_LABELS.fetch(training_type) %> 2日連続
+                    </span>
+                  <% end %>
+                <% else %>
+                  <span class="text-stone-400" aria-label="記録なし">—</span>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

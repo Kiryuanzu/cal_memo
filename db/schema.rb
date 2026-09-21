@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_10_141050) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_19_000100) do
   create_table "daily_food_logs", force: :cascade do |t|
     t.integer "calories", null: false
     t.text "comment"
@@ -28,6 +28,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_10_141050) do
     t.index ["food_id"], name: "index_daily_food_logs_on_food_id"
   end
 
+  create_table "daily_training_logs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "duration_seconds"
+    t.integer "reps"
+    t.integer "sets"
+    t.date "trained_on", null: false
+    t.integer "training_exercise_id", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "weight_kg", precision: 6, scale: 2
+    t.index ["trained_on"], name: "index_daily_training_logs_on_trained_on"
+    t.index ["training_exercise_id"], name: "index_daily_training_logs_on_training_exercise_id"
+  end
+
   create_table "foods", force: :cascade do |t|
     t.integer "calories", null: false
     t.integer "category", null: false
@@ -40,5 +53,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_10_141050) do
     t.index ["category", "name"], name: "index_foods_on_category_and_name", unique: true
   end
 
+  create_table "training_exercises", force: :cascade do |t|
+    t.integer "body_part", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.integer "training_type", null: false
+    t.datetime "updated_at", null: false
+    t.index ["training_type", "name"], name: "index_training_exercises_on_training_type_and_name", unique: true
+  end
+
   add_foreign_key "daily_food_logs", "foods"
+  add_foreign_key "daily_training_logs", "training_exercises"
 end

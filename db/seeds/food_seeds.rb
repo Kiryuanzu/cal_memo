@@ -1,0 +1,102 @@
+# db/seeds.rb
+
+foods_by_category = {
+  breakfast: [
+    { name: "食パン6枚切り", calories: 149, protein_g: 6, food_group: :staple, manual_calories_enabled: false },
+    { name: "ベースブレッド", calories: 230, protein_g: 13, food_group: :staple, manual_calories_enabled: false },
+    { name: "ご飯100g", calories: 156, protein_g: 3, food_group: :staple, manual_calories_enabled: false },
+    { name: "ご飯120g", calories: 187, protein_g: 3, food_group: :staple, manual_calories_enabled: false },
+    { name: "ご飯150g", calories: 234, protein_g: 4, food_group: :staple, manual_calories_enabled: false },
+    { name: "納豆", calories: 90, protein_g: 8, food_group: :main, manual_calories_enabled: false },
+    { name: "ゆで卵", calories: 80, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "目玉焼き", calories: 120, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "味噌汁", calories: 40, protein_g: 3, food_group: :side, manual_calories_enabled: false },
+    { name: "豆腐入り味噌汁", calories: 70, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "外食", calories: 900, protein_g: 25, food_group: :main, manual_calories_enabled: true },
+    { name: "ヨーグルト", calories: 110, protein_g: 5, food_group: :dairy, manual_calories_enabled: false },
+    { name: "バナナ", calories: 86, protein_g: 1, food_group: :fruit, manual_calories_enabled: false },
+    { name: "みかん", calories: 35, protein_g: 1, food_group: :fruit, manual_calories_enabled: false },
+    { name: "いちご（2粒）", calories: 12, protein_g: 0, food_group: :fruit, manual_calories_enabled: false }
+  ],
+  lunch_dinner: [
+    { name: "ご飯100g", calories: 156, protein_g: 3, food_group: :staple, manual_calories_enabled: false },
+    { name: "ご飯120g", calories: 187, protein_g: 3, food_group: :staple, manual_calories_enabled: false },
+    { name: "ご飯150g", calories: 234, protein_g: 4, food_group: :staple, manual_calories_enabled: false },
+    { name: "ベースブレッド", calories: 230, protein_g: 13, food_group: :staple, manual_calories_enabled: false },
+    { name: "味噌汁", calories: 40, protein_g: 3, food_group: :side, manual_calories_enabled: false },
+    { name: "豆腐入り味噌汁", calories: 70, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "ゆで卵", calories: 80, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "目玉焼き", calories: 120, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "noshのお弁当", calories: 350, protein_g: 25, food_group: :main, manual_calories_enabled: true },
+    { name: "うどん", calories: 230, protein_g: 7, food_group: :staple, manual_calories_enabled: false },
+    { name: "そば（乾麺60g）", calories: 210, protein_g: 8, food_group: :staple, manual_calories_enabled: false },
+    { name: "チキンとズッキーニの炊き込みご飯", calories: 450, protein_g: 22, food_group: :staple, manual_calories_enabled: false },
+    { name: "タコス（1枚）", calories: 250, protein_g: 10, food_group: :staple, manual_calories_enabled: false },
+    { name: "タコライス", calories: 600, protein_g: 22, food_group: :staple, manual_calories_enabled: false },
+    { name: "ミートソース", calories: 500, protein_g: 20, food_group: :main, manual_calories_enabled: false },
+    { name: "カルボナーラ", calories: 700, protein_g: 25, food_group: :staple, manual_calories_enabled: false },
+    { name: "豚肉と玉ねぎ煮込み", calories: 200, protein_g: 15, food_group: :main, manual_calories_enabled: false },
+    { name: "豚肉と小松菜炒め", calories: 200, protein_g: 14, food_group: :main, manual_calories_enabled: false },
+    { name: "豚肉と白菜の冷しゃぶ", calories: 300, protein_g: 18, food_group: :main, manual_calories_enabled: false },
+    { name: "牛豚ひき肉のステーキ", calories: 300, protein_g: 18, food_group: :main, manual_calories_enabled: false },
+    { name: "鶏・豚の酒蒸し", calories: 200, protein_g: 25, food_group: :main, manual_calories_enabled: false },
+    { name: "鶏もも肉チャーシュー（皮なし100g）", calories: 200, protein_g: 20, food_group: :main },
+    { name: "鶏ささみ（2本）", calories: 100, protein_g: 22, food_group: :main, manual_calories_enabled: false },
+    { name: "サラダチキン（3切れ）", calories: 60, protein_g: 12, food_group: :main, manual_calories_enabled: false },
+    { name: "タンドリーチキン（鶏むね100g）", calories: 180, protein_g: 22, food_group: :main, manual_calories_enabled: false },
+    { name: "鶏のさっぱり煮（手羽元1本）", calories: 220, protein_g: 10, food_group: :main, manual_calories_enabled: false },
+    { name: "親子丼", calories: 400, protein_g: 20, food_group: :main, manual_calories_enabled: false },
+    { name: "カレー", calories: 300, protein_g: 10, food_group: :main, manual_calories_enabled: false },
+    { name: "外食", calories: 900, protein_g: 25, food_group: :main, manual_calories_enabled: true },
+    { name: "ハンバーグ", calories: 300, protein_g: 18, food_group: :main, manual_calories_enabled: false },
+    { name: "ポトフ", calories: 300, protein_g: 12, food_group: :main, manual_calories_enabled: false },
+    { name: "クリームシチュー", calories: 400, protein_g: 15, food_group: :main, manual_calories_enabled: false },
+    { name: "焼き魚", calories: 200, protein_g: 25, food_group: :main, manual_calories_enabled: false },
+    { name: "刺身", calories: 150, protein_g: 22, food_group: :main, manual_calories_enabled: false },
+    { name: "しょうが焼き", calories: 150, protein_g: 15, food_group: :main, manual_calories_enabled: false },
+    { name: "きゅうりの漬物", calories: 15, protein_g: 0, food_group: :side, manual_calories_enabled: false },
+    { name: "茄子の煮浸し", calories: 100, protein_g: 1, food_group: :side, manual_calories_enabled: false },
+    { name: "茹でブロッコリー", calories: 20, protein_g: 3, food_group: :side, manual_calories_enabled: false },
+    { name: "茹でほうれん草", calories: 15, protein_g: 2, food_group: :side, manual_calories_enabled: false },
+    { name: "きんぴらごぼう", calories: 40, protein_g: 1, food_group: :side, manual_calories_enabled: false },
+    { name: "レバニラ卵炒め", calories: 200, protein_g: 15, food_group: :main, manual_calories_enabled: false },
+    { name: "トマトと卵炒め", calories: 100, protein_g: 7, food_group: :main, manual_calories_enabled: false },
+    { name: "無脂肪ヨーグルト", calories: 25, protein_g: 3, food_group: :dairy, manual_calories_enabled: false },
+    { name: "納豆", calories: 90, protein_g: 8, food_group: :main, manual_calories_enabled: false },
+    { name: "いちご（2粒）", calories: 12, protein_g: 0, food_group: :fruit, manual_calories_enabled: false },
+    { name: "アジフライ（小さめ1尾）", calories: 250, protein_g: 12, food_group: :main },
+    { name: "アジのなめろう（100g）", calories: 170, protein_g: 18, food_group: :main, manual_calories_enabled: false },
+    { name: "アジの南蛮漬け", calories: 250, protein_g: 15, food_group: :main, manual_calories_enabled: false },
+    { name: "千切りキャベツ", calories: 15, protein_g: 1, food_group: :side },
+    { name: "青椒肉絲", calories: 300, protein_g: 15, food_group: :main }
+  ],
+  snack: [
+    { name: "ミックスナッツ(少量)", calories: 15, protein_g: 1, food_group: :main, manual_calories_enabled: false },
+    { name: "するめいか", calories: 44, protein_g: 8, food_group: :main, manual_calories_enabled: false },
+    { name: "チーズ", calories: 60, protein_g: 4, food_group: :dairy, manual_calories_enabled: false },
+    { name: "ゆで卵", calories: 80, protein_g: 6, food_group: :main, manual_calories_enabled: false },
+    { name: "みかん", calories: 35, protein_g: 0, food_group: :fruit, manual_calories_enabled: false },
+    { name: "果物", calories: 100, protein_g: 0, food_group: :fruit, manual_calories_enabled: true },
+    { name: "和菓子", calories: 200, protein_g: 4, food_group: :sweet, manual_calories_enabled: true },
+    { name: "洋菓子", calories: 300, protein_g: 4, food_group: :sweet, manual_calories_enabled: true },
+    { name: "飲み物", calories: 100, protein_g: 0, food_group: :drink, manual_calories_enabled: true },
+    { name: "氷菓子", calories: 100, protein_g: 0, food_group: :sweet, manual_calories_enabled: true }
+  ]
+}
+
+foods_by_category.each do |category, foods|
+  foods.each do |attrs|
+    food = Food.find_or_initialize_by(
+      name: attrs[:name],
+      category: category
+    )
+
+    food.calories = attrs[:calories]
+    food.protein_g = attrs[:protein_g]
+    food.food_group = attrs[:food_group]
+    food.manual_calories_enabled = attrs.fetch(:manual_calories_enabled, false)
+    food.save!
+  end
+end
+
+puts "Seeded #{Food.count} foods."

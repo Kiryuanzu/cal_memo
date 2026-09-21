@@ -1,0 +1,63 @@
+<% content_for :title, "筋トレ記録 | カロリー計算メモ帳" %>
+
+<main id="page-top" class="<%= page_shell_classes %>">
+  <div id="training-flash" class="pointer-events-none fixed bottom-4 inset-x-4 z-50 mx-auto max-w-xl" role="status"></div>
+
+  <header class="<%= top_bar_classes %>">
+    <div class="<%= top_bar_inner_classes %>">
+      <%= link_to "CALORIE MEMO BOOK", root_path, class: brand_control_classes %>
+
+      <nav class="<%= nav_group_classes %>" aria-label="画面切替">
+        <%= link_to "食事・カロリー", root_path(date: @selected_date.iso8601), class: section_tab_classes %>
+        <%= link_to "筋トレ", daily_training_logs_path(date: @selected_date.iso8601, tab: @selected_tab), class: period_tab_classes(true), aria: { current: "page" } %>
+      </nav>
+    </div>
+  </header>
+
+  <section class="<%= panel_classes %>">
+    <h1 class="<%= page_title_classes %>">筋トレ記録</h1>
+
+    <p class="<%= section_description_classes %>">種目を選んで、その日の筋トレを記録できます。</p>
+
+    <p class="mt-5 text-base font-semibold text-orange-900 sm:text-lg">
+      <%= @selected_date.year %>年<%= @selected_date.month %>月<%= @selected_date.day %>日の記録
+    </p>
+
+    <%= form_with url: daily_training_logs_path, method: :get, class: "mt-5 flex flex-wrap items-end gap-3" do |form| %>
+      <div class="min-w-0 flex-1 sm:flex-none">
+        <%= form.label :date, "表示する日付", class: form_label_classes %>
+        <%= form.date_field :date, value: @selected_date.iso8601, required: true, class: input_classes %>
+      </div>
+
+      <%= form.hidden_field :tab, value: @selected_tab %>
+
+      <%= form.submit "表示", class: subtle_button_classes %>
+    <% end %>
+
+    <nav class="mt-4 grid grid-cols-3 gap-2" aria-label="日付切替">
+      <%= link_to "前の日", daily_training_logs_path(date: (@selected_date - 1.day).iso8601, tab: @selected_tab), class: subtle_button_classes %>
+      <%= link_to "今日", daily_training_logs_path(tab: @selected_tab), class: primary_button_classes %>
+      <%= link_to "次の日", daily_training_logs_path(date: (@selected_date + 1.day).iso8601, tab: @selected_tab), class: subtle_button_classes %>
+    </nav>
+  </section>
+
+  <%= render "summary", selected_date: @selected_date, selected_tab: @selected_tab, range: @summary_range, body_parts_by_date: @body_parts_by_date, body_part_days: @body_part_days, comparison_parts_by_date: @comparison_parts_by_date, training_types_by_date: @training_types_by_date %>
+
+  <%= render "input", daily_training_log: @daily_training_log, selected_tab: @selected_tab, selected_date: @selected_date, exercises_by_type: @exercises_by_type %>
+
+  <section id="daily-logs-section" class="<%= panel_classes %> scroll-mt-40">
+    <h2 class="<%= section_title_classes %>">この日の筋トレ</h2>
+
+    <p class="<%= section_description_classes %>">記録をクリックすると、セット数・回数・重量・時間を追記・編集できます。</p>
+
+    <% if @daily_logs.empty? %>
+      <p id="training-empty-state" class="<%= empty_state_classes %>">この日の筋トレ記録はまだありません。</p>
+    <% end %>
+
+    <ul id="training-log-list" class="mt-6 grid gap-3 sm:grid-cols-2">
+      <% @daily_logs.each do |log| %>
+        <%= render "log_item", log: log, selected_tab: @selected_tab %>
+      <% end %>
+    </ul>
+  </section>
+</main>

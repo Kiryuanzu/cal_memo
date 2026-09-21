@@ -54,6 +54,7 @@
 
         <%= link_to "食品一覧", foods_path, class: section_tab_classes, data: { turbo_frame: "_top" } %>
         <%= link_to "バランス", balance_path, class: section_tab_classes, data: { turbo_frame: "_top" } %>
+        <%= link_to "筋トレ", daily_training_logs_path(date: selected_date.iso8601), class: section_tab_classes, data: { turbo_frame: "_top" } %>
       </nav>
     </div>
   </header>

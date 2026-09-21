@@ -1,0 +1,19 @@
+squat:
+  name: スクワット
+  body_part: lower_body
+  training_type: home
+
+plank:
+  name: プランク
+  body_part: core
+  training_type: home
+
+curl:
+  name: ダンベルカール
+  body_part: chest_arms
+  training_type: home
+
+gym_shoulder:
+  name: ジム・肩
+  body_part: shoulder
+  training_type: gym
