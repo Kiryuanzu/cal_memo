@@ -1,5 +1,9 @@
 <%# locals: (log:, selected_tab:) %>
 
-<li class="<%= card_classes %>">
+<li id="<%= dom_id(log, :item) %>" class="<%= card_classes %>">
   <%= render "log", log: log, selected_tab: selected_tab %>
+
+  <div class="mt-4 flex justify-end">
+    <%= button_to "削除", daily_training_log_path(log, tab: selected_tab), method: :delete, class: danger_button_classes, form: { data: { turbo_confirm: "#{log.trained_on.strftime('%Y/%-m/%-d')}の#{log.training_exercise.name}の記録を削除しますか？" } } %>
+  </div>
 </li>
