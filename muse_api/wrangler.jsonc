@@ -1,0 +1,22 @@
+{
+  // Worker の設定ファイル。`wrangler deploy` がこれを読んでデプロイする。
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cal-memo-muse-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-20",
+  // Workers Logs は無効。2026-12-01 から料金体系が変わり、Free での扱いが未確認のため。
+  // デバッグ時は `npx wrangler tail` でリアルタイムにログを見られる (保存はされない)。
+  "observability": { "enabled": false },
+  // D1 バインディング: コード中では env.DB として参照できる。
+  // database_id は `npx wrangler d1 create cal_memo_muse` で発行された値 (秘密情報ではない)。
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cal_memo_muse",
+      "database_id": "8149bd32-79cc-4985-994d-5eb9165b71fe",
+      "migrations_dir": "migrations"
+    }
+  ]
+  // READ_TOKEN / SYNC_TOKEN はシークレット。ここには書かず
+  // `npx wrangler secret put READ_TOKEN` で登録する（ローカルは .dev.vars）。
+}

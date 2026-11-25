@@ -1,0 +1,26 @@
+{
+  "name": "muse_api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read-only meal log API for Meta Muse, running on Cloudflare Workers + D1",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "db:migrate:local": "wrangler d1 migrations apply cal_memo_muse --local",
+    "db:migrate:remote": "wrangler d1 migrations apply cal_memo_muse --remote"
+  },
+  "dependencies": {
+    "hono": "^4.13.21"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.9.2",
+    "@cloudflare/workers-types": "^5.20261124.1",
+    "@types/node": "^22.20.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1",
+    "wrangler": "^4.168.0"
+  }
+}
