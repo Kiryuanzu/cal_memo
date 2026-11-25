@@ -50,9 +50,9 @@
 
     <p class="<%= section_description_classes %>">記録をクリックすると、セット数・回数・重量・時間を追記・編集できます。</p>
 
-    <% if @daily_logs.empty? %>
-      <p id="training-empty-state" class="<%= empty_state_classes %>">この日の筋トレ記録はまだありません。</p>
-    <% end %>
+    <div id="training-empty-message">
+      <%= render "empty_state" if @daily_logs.empty? %>
+    </div>
 
     <ul id="training-log-list" class="mt-6 grid gap-3 sm:grid-cols-2">
       <% @daily_logs.each do |log| %>

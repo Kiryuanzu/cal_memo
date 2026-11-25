@@ -75,6 +75,33 @@ class DailyTrainingLogsController < ApplicationController
     end
   end
 
+  def destroy
+    log = DailyTrainingLog.find(params.expect(:id))
+    @selected_date = log.trained_on
+    notice = "#{log.training_exercise.name}の記録を削除しました。"
+    log.destroy!
+
+    respond_to do |format|
+      format.turbo_stream do
+        load_summary
+        flash.now[:notice] = notice
+        updates = [
+          turbo_stream.update("training-flash", partial: "shared/flash"),
+          turbo_stream.remove(helpers.dom_id(log, :item)),
+          turbo_stream.replace("training-summary", partial: "daily_training_logs/summary", locals: summary_locals)
+        ]
+        unless DailyTrainingLog.for_date(@selected_date).exists?
+          updates << turbo_stream.update("training-empty-message", partial: "daily_training_logs/empty_state")
+        end
+        render turbo_stream: updates
+      end
+      format.html do
+        redirect_to daily_training_logs_path(date: @selected_date.iso8601, tab: @selected_tab, anchor: "daily-logs-section"),
+          notice: notice, status: :see_other
+      end
+    end
+  end
+
   private
     def set_selected_tab
       @selected_tab = params[:tab].in?(%w[week month]) ? params[:tab] : nil
